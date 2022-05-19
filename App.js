@@ -1,21 +1,14 @@
 import {StyleSheet, SafeAreaView} from 'react-native';
-import React from 'react';
-import HomePage from './src/components/HomePage';
-import LinearGradient from 'react-native-linear-gradient';
+import * as React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import ScreenManager from './src/screens/ScreenManager';
 
 const App = () => {
   return (
-    <SafeAreaView style={styles.Container}>
-      <HomePage />
-    </SafeAreaView>
+    <NavigationContainer>
+      <ScreenManager />
+    </NavigationContainer>
   );
 };
 
 export default App;
-
-const styles = StyleSheet.create({
-  Container: {
-    backgroundColor: '#404CCF',
-    height: '100%',
-  },
-});

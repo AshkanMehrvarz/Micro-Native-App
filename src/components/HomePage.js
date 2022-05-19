@@ -3,11 +3,10 @@ import * as React from 'react';
 import Slider from './HomepageSlider';
 import HomepageButtons from './HomepageButtons';
 import {moderateScale} from 'react-native-size-matters';
-import WebView from 'react-native-webview';
 
 const HomePage = () => {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.SafeAreaView}>
       <View style={styles.Container}>
         <Slider />
         <HomepageButtons />
@@ -19,7 +18,11 @@ const HomePage = () => {
 export default HomePage;
 
 const styles = StyleSheet.create({
+  SafeAreaView: {
+    backgroundColor: '#404CCF',
+  },
   Container: {
+    backgroundColor: '#404CCF',
     height: '100%',
     justifyContent: 'flex-end',
     alignItems: 'center',

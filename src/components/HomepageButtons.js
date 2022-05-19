@@ -4,8 +4,11 @@ import LoginIcon from '../assets/svg/LoginIcon';
 import WebsiteIcon from '../assets/svg/WebsiteIcon';
 import {moderateScale} from 'react-native-size-matters';
 import React from 'react';
+import {useNavigation} from '@react-navigation/native';
 
 const HomepageButtons = () => {
+  const navigation = useNavigation();
+  const HelpButtonHandler = () => navigation.navigate('HelpScreen');
   return (
     <View style={styles.Container}>
       <TouchableOpacity style={styles.Button} activeOpacity={0.7}>
@@ -17,7 +20,8 @@ const HomepageButtons = () => {
 
       <TouchableOpacity
         style={[styles.Button, styles.SecendryButton]}
-        activeOpacity={0.7}>
+        activeOpacity={0.7}
+        onPress={HelpButtonHandler}>
         <Text style={[styles.Text, styles.SecendryText]}>راهنما</Text>
         <View style={styles.Icon}>
           <HelpIcon />

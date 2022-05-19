@@ -34,7 +34,7 @@ const HomepageSlider = () => {
         />
       }>
       <View style={styles.slide}>
-        <Text style={styles.text}>Hesllo Swiper</Text>
+        <Text style={styles.text}>Hello Swiper</Text>
       </View>
       <View style={styles.slide}>
         <Text style={styles.text}>Beautiful</Text>
