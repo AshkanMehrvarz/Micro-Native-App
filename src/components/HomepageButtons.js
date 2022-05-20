@@ -9,6 +9,7 @@ import {useNavigation} from '@react-navigation/native';
 const HomepageButtons = () => {
   const navigation = useNavigation();
   const HelpButtonHandler = () => navigation.navigate('HelpScreen');
+  const WebsiteButtonHandler = () => navigation.navigate('WebsiteScreen');
   return (
     <View style={styles.Container}>
       <TouchableOpacity style={styles.Button} activeOpacity={0.7}>
@@ -30,7 +31,8 @@ const HomepageButtons = () => {
 
       <TouchableOpacity
         style={[styles.Button, styles.SecendryButton]}
-        activeOpacity={0.7}>
+        activeOpacity={0.7}
+        onPress={WebsiteButtonHandler}>
         <Text style={[styles.Text, styles.SecendryText]}>وبسایت</Text>
         <View style={styles.Icon}>
           <WebsiteIcon />
