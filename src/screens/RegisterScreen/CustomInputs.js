@@ -18,14 +18,14 @@ export default function CustomInputs({label, placeholder}) {
 const styles = StyleSheet.create({
   Container: {
     width: '100%',
-    marginVertical: moderateScale(15),
+    marginVertical: moderateScale(10),
   },
   Input: {
     backgroundColor: '#FFF',
     width: '100%',
     borderRadius: moderateScale(8),
     height: moderateScale(40),
-    borderColor: '#404CCF',
+    borderColor: '#33333380',
     borderWidth: moderateScale(2),
     paddingHorizontal: moderateScale(10),
     textAlign: 'right',
@@ -36,5 +36,6 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(14),
     textAlign: 'right',
     marginBottom: moderateScale(10),
+    marginRight: moderateScale(2.5),
   },
 });

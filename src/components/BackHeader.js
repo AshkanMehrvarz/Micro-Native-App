@@ -4,19 +4,19 @@ import React from 'react';
 import BackIcon from '../assets/svg/BackIcon';
 import {moderateScale} from 'react-native-size-matters';
 import {useNavigation} from '@react-navigation/native';
-const BackHeader = () => {
+const BackHeader = ({titleColor, bgColor, iconColor}) => {
   const navigation = useNavigation();
 
   const backIconHandler = () => navigation.goBack();
   return (
-    <View style={styles.Container}>
+    <View style={[styles.Container, {backgroundColor: bgColor}]}>
       <TouchableOpacity
         style={styles.Icon}
         activeOpacity={0.7}
         onPress={backIconHandler}>
-        <BackIcon />
+        <BackIcon color={iconColor} />
       </TouchableOpacity>
-      <Text style={styles.Title}>بازگشت</Text>
+      <Text style={[styles.Title, {color: titleColor}]}>بازگشت</Text>
     </View>
   );
 };
@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: moderateScale(15),
+    width: '100%',
   },
   Title: {
     fontFamily: 'Vazirmatn-Bold',
@@ -46,7 +47,8 @@ const styles = StyleSheet.create({
       width: 0,
       height: 0,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: moderateScale(10),
+    elevation: moderateScale(10),
+    shadowOpacity: 0.15,
+    shadowRadius: moderateScale(5),
   },
 });

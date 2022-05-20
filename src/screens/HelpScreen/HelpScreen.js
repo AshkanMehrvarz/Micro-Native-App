@@ -7,7 +7,7 @@ import BackHeader from '../../components/BackHeader';
 const HelpScreen = () => {
   return (
     <SafeAreaView style={styles.SafeAreaView}>
-      <BackHeader />
+      <BackHeader titleColor="#FFF" bgColor="#404CCF" iconColor="#404CCF" />
       <HelpScreenWebView />
     </SafeAreaView>
   );
