@@ -1,18 +1,22 @@
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import HelpIcon from '../assets/svg/HelpIcon';
-import LoginIcon from '../assets/svg/LoginIcon';
-import WebsiteIcon from '../assets/svg/WebsiteIcon';
+import * as React from 'react';
+import HelpIcon from '../../assets/svg/HelpIcon';
+import LoginIcon from '../../assets/svg/LoginIcon';
+import WebsiteIcon from '../../assets/svg/WebsiteIcon';
 import {moderateScale} from 'react-native-size-matters';
-import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 
 const HomepageButtons = () => {
   const navigation = useNavigation();
+  const RegisterButtonHandler = () => navigation.navigate('RegisterPage');
   const HelpButtonHandler = () => navigation.navigate('HelpScreen');
   const WebsiteButtonHandler = () => navigation.navigate('WebsiteScreen');
   return (
     <View style={styles.Container}>
-      <TouchableOpacity style={styles.Button} activeOpacity={0.7}>
+      <TouchableOpacity
+        style={styles.Button}
+        activeOpacity={0.7}
+        onPress={RegisterButtonHandler}>
         <Text style={styles.Text}>ثبت نام</Text>
         <View style={styles.Icon}>
           <LoginIcon />

@@ -1,6 +1,6 @@
 import {StyleSheet, View, SafeAreaView} from 'react-native';
-import * as React from 'react';
 import Slider from './HomepageSlider';
+import * as React from 'react';
 import HomepageButtons from './HomepageButtons';
 import {moderateScale} from 'react-native-size-matters';
 
