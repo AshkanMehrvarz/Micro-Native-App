@@ -22,14 +22,15 @@ export default function QRScreen() {
   const flashHandler = () => setFlashStatus(!flashStatus);
   const cameraHandler = () => setCameraStatus(!cameraStatus);
   const link = () => Linking.openURL('https://www.google.com/');
-  const Marker = () => {
-    return <View style={styles.Marker}></View>;
-  };
   return (
     <SafeAreaView>
       <View style={styles.Container}>
         <View style={styles.BackHeader}>
-          <BackHeader titleColor="#333" bgColor="#FFFFFF" iconColor="#333" />
+          <BackHeader
+            titleColor="transparent"
+            bgColor="transparent"
+            iconColor="#333"
+          />
         </View>
         <View style={styles.Bottom}>
           <TouchableOpacity

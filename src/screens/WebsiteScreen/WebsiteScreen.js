@@ -6,7 +6,7 @@ import WebsiteWebView from './WebsiteWebView';
 const HelpScreen = () => {
   return (
     <SafeAreaView style={styles.SafeAreaView}>
-      <BackHeader titleColor="#FFF" bgColor="#404CCF" iconColor="#404CCF" />
+      <BackHeader titleColor="#333" bgColor="transparent" iconColor="#333" />
       <WebsiteWebView />
     </SafeAreaView>
   );
