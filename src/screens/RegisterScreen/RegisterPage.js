@@ -47,6 +47,11 @@ const RegisterPage = () => {
       .max(1000000000000000000000000, 'کد وارد شده باید ۲۴ رقم باشد'),
   });
 
+  const formSubmitHandler = (values, {resetForm}) => {
+    console.log(values);
+    resetForm({values: ''});
+  };
+
   const navigation = useNavigation();
   const qrCodeHandler = () => navigation.navigate('QrCodeScreen');
   return (
@@ -68,7 +73,7 @@ const RegisterPage = () => {
               customerPhoneNumber: '',
               code: '',
             }}
-            onSubmit={values => console.log(values)}>
+            onSubmit={formSubmitHandler}>
             {({
               handleChange,
               handleBlur,
