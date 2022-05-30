@@ -8,17 +8,48 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  ActivityIndicator,
+  Image,
 } from 'react-native';
 import React from 'react';
 import Logo from '../../assets/svg/Logo';
 import {moderateScale} from 'react-native-size-matters';
 import BackHeader from '../../components/BackHeader';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import Toast from 'react-native-toast-message';
 import {Formik} from 'formik';
 import * as yup from 'yup';
 import 'yup-phone';
 
 const RegisterPage = () => {
+  const navigation = useNavigation();
+  const isFocused = useIsFocused();
+  const RegisterButtonHandler = e =>
+    navigation.navigate('LinenceScreen', {licence: e});
+  const goHomeButton = () => navigation.navigate('Home');
+  const qrCodeHandler = () => navigation.navigate('QrCodeScreen');
+  const [isRegistered, setIsRegistered] = React.useState(false);
+
+  const getData = async () => {
+    try {
+      // AsyncStorage.setItem('isRegistered', 'false');
+      const value = await AsyncStorage.getItem('isRegistered');
+      if (value !== null) {
+        setIsRegistered(value === 'false' ? false : true);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  React.useEffect(() => {
+    getData();
+  }, [isFocused]);
+
+  const [id, setId] = React.useState(0);
+  const [submitButtonStatus, setSubmitButtonStatus] = React.useState(false);
   const registerValidationSchema = yup.object().shape({
     fullName: yup
       .string()
@@ -47,138 +78,194 @@ const RegisterPage = () => {
       .max(1000000000000000000000000, 'کد وارد شده باید ۲۴ رقم باشد'),
   });
 
-  const formSubmitHandler = (values, {resetForm}) => {
-    console.log(values);
-    resetForm({values: ''});
+  const formSubmitHandler = async (values, {resetForm}) => {
+    setSubmitButtonStatus(true);
+    setId(id + 1);
+    const res = await axios.put(
+      'http://151.106.35.10:2000/api/getlicence/getlicence',
+      {
+        Name: values.fullName,
+        UserId: id,
+        CodeMic: values.code,
+        MobileNasab: values.phoneNumber,
+        MobileMoshtari: values.customerPhoneNumber,
+      },
+    );
+    setSubmitButtonStatus(false);
+    if (res.data.ResultCode === 1) {
+      Toast.show({
+        type: 'error',
+        text1: 'کد وارد شده اشتباه است',
+        visibilityTime: 5000,
+        topOffset: moderateScale(50),
+      });
+    } else {
+      AsyncStorage.setItem('isRegistered', 'true');
+      RegisterButtonHandler(res.data.ResultMessage);
+    }
+
+    console.log(res);
   };
 
-  const navigation = useNavigation();
-  const qrCodeHandler = () => navigation.navigate('QrCodeScreen');
   return (
     <SafeAreaView style={styles.SafeAreaView}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={{flex: 1}}>
-        <BackHeader
-          titleColor="transparent"
-          bgColor="transparent"
-          iconColor="#333"
-        />
-        <ScrollView>
-          <Formik
-            validationSchema={registerValidationSchema}
-            initialValues={{
-              fullName: '',
-              phoneNumber: '',
-              customerPhoneNumber: '',
-              code: '',
-            }}
-            onSubmit={formSubmitHandler}>
-            {({
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              values,
-              errors,
-              isValid,
-              touched,
-            }) => (
-              <View style={styles.Container}>
-                <Logo size={1.25} />
-                <View style={styles.InputsDiv}>
-                  <View style={styles.InputsContainer}>
-                    <Text style={styles.Label}>نام و نام خانوادگی</Text>
-                    <TextInput
-                      name="fullName"
-                      style={styles.Input}
-                      placeholderTextColor="#33333380"
-                      onChangeText={handleChange('fullName')}
-                      onBlur={handleBlur('fullName')}
-                      value={values.fullName}
-                      keyboardType="default"
-                    />
-                    {errors.fullName && touched.fullName && (
-                      <Text style={styles.ErrorText}>{errors.fullName}</Text>
-                    )}
-                  </View>
+      {!isRegistered ? (
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={{flex: 1}}>
+          <BackHeader
+            titleColor="transparent"
+            bgColor="transparent"
+            iconColor="#333"
+          />
+          <ScrollView>
+            <Formik
+              validationSchema={registerValidationSchema}
+              initialValues={{
+                fullName: '',
+                phoneNumber: '',
+                customerPhoneNumber: '',
+                code: '',
+              }}
+              onSubmit={formSubmitHandler}>
+              {({
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                values,
+                errors,
+                isValid,
+                touched,
+              }) => (
+                <View style={styles.Container}>
+                  <Logo size={1.25} />
+                  <View style={styles.InputsDiv}>
+                    <View style={styles.InputsContainer}>
+                      <Text style={styles.Label}>نام و نام خانوادگی</Text>
+                      <TextInput
+                        name="fullName"
+                        style={styles.Input}
+                        placeholderTextColor="#33333380"
+                        onChangeText={handleChange('fullName')}
+                        onBlur={handleBlur('fullName')}
+                        value={values.fullName}
+                        keyboardType="default"
+                      />
+                      {errors.fullName && touched.fullName && (
+                        <Text style={styles.ErrorText}>{errors.fullName}</Text>
+                      )}
+                    </View>
 
-                  <View style={styles.InputsContainer}>
-                    <Text style={styles.Label}>شماره موبایل</Text>
-                    <TextInput
-                      name="phoneNumber"
-                      style={styles.Input}
-                      placeholder={'09306817599'}
-                      placeholderTextColor="#33333380"
-                      onChangeText={handleChange('phoneNumber')}
-                      onBlur={handleBlur('phoneNumber')}
-                      value={values.phoneNumber}
-                      keyboardType="numeric"
-                    />
-                    {errors.phoneNumber && touched.phoneNumber && (
-                      <Text style={styles.ErrorText}>{errors.phoneNumber}</Text>
-                    )}
-                  </View>
-
-                  <View style={styles.InputsContainer}>
-                    <Text style={styles.Label}>شماره موبایل مشتری</Text>
-                    <TextInput
-                      name="customerPhoneNumber"
-                      style={styles.Input}
-                      placeholder={'لطفا شماره موبایل مشتری خود را وارد کنید'}
-                      placeholderTextColor="#33333380"
-                      onChangeText={handleChange('customerPhoneNumber')}
-                      onBlur={handleBlur('customerPhoneNumber')}
-                      value={values.customerPhoneNumber}
-                      keyboardType="numeric"
-                    />
-                    {errors.customerPhoneNumber &&
-                      touched.customerPhoneNumber && (
+                    <View style={styles.InputsContainer}>
+                      <Text style={styles.Label}>شماره موبایل</Text>
+                      <TextInput
+                        name="phoneNumber"
+                        style={styles.Input}
+                        placeholder={'09306817599'}
+                        placeholderTextColor="#33333380"
+                        onChangeText={handleChange('phoneNumber')}
+                        onBlur={handleBlur('phoneNumber')}
+                        value={values.phoneNumber}
+                        keyboardType="numeric"
+                      />
+                      {errors.phoneNumber && touched.phoneNumber && (
                         <Text style={styles.ErrorText}>
-                          {errors.customerPhoneNumber}
+                          {errors.phoneNumber}
                         </Text>
                       )}
-                  </View>
+                    </View>
 
-                  <View style={styles.InputsContainer}>
-                    <Text style={styles.Label}>کد</Text>
-                    <TextInput
-                      name="code"
-                      style={styles.Input}
-                      placeholder={'لطفا کد خود را وارد کنید'}
-                      placeholderTextColor="#33333380"
-                      onChangeText={handleChange('code')}
-                      onBlur={handleBlur('code')}
-                      value={values.code}
-                      keyboardType="numeric"
-                    />
-                    {errors.code && touched.code && (
-                      <Text style={styles.ErrorText}>{errors.code}</Text>
+                    <View style={styles.InputsContainer}>
+                      <Text style={styles.Label}>شماره موبایل مشتری</Text>
+                      <TextInput
+                        name="customerPhoneNumber"
+                        style={styles.Input}
+                        placeholder={'لطفا شماره موبایل مشتری خود را وارد کنید'}
+                        placeholderTextColor="#33333380"
+                        onChangeText={handleChange('customerPhoneNumber')}
+                        onBlur={handleBlur('customerPhoneNumber')}
+                        value={values.customerPhoneNumber}
+                        keyboardType="numeric"
+                      />
+                      {errors.customerPhoneNumber &&
+                        touched.customerPhoneNumber && (
+                          <Text style={styles.ErrorText}>
+                            {errors.customerPhoneNumber}
+                          </Text>
+                        )}
+                    </View>
+
+                    <View style={styles.InputsContainer}>
+                      <Text style={styles.Label}>کد</Text>
+                      <TextInput
+                        name="code"
+                        style={styles.Input}
+                        placeholder={'لطفا کد خود را وارد کنید'}
+                        placeholderTextColor="#33333380"
+                        onChangeText={handleChange('code')}
+                        onBlur={handleBlur('code')}
+                        value={values.code}
+                        keyboardType="numeric"
+                      />
+                      {errors.code && touched.code && (
+                        <Text style={styles.ErrorText}>{errors.code}</Text>
+                      )}
+                    </View>
+                  </View>
+                  <View style={styles.ButtonsDiv}>
+                    {!submitButtonStatus ? (
+                      <TouchableOpacity
+                        style={[styles.Button, {opacity: !isValid ? 0.25 : 1}]}
+                        activeOpacity={0.7}
+                        onPress={handleSubmit}
+                        disabled={!isValid}>
+                        <Text style={styles.ButtonText}>ثبت نام</Text>
+                      </TouchableOpacity>
+                    ) : (
+                      <TouchableOpacity
+                        style={[
+                          styles.Button,
+                          {
+                            flexDirection: 'row-reverse',
+                            justifyContent: 'space-around',
+                            paddingHorizontal: moderateScale(100),
+                          },
+                        ]}
+                        disabled={true}>
+                        <ActivityIndicator size="small" color="#FFF" />
+                      </TouchableOpacity>
                     )}
+
+                    <TouchableOpacity
+                      style={[styles.Button, styles.ButtonSecendry]}
+                      activeOpacity={0.7}
+                      onPress={qrCodeHandler}>
+                      <Text
+                        style={[styles.ButtonText, styles.ButtonTextSecendry]}>
+                        اسکن کد
+                      </Text>
+                    </TouchableOpacity>
                   </View>
                 </View>
-                <View style={styles.ButtonsDiv}>
-                  <TouchableOpacity
-                    style={[styles.Button, {opacity: !isValid ? 0.25 : 1}]}
-                    activeOpacity={0.7}
-                    onPress={handleSubmit}
-                    disabled={!isValid}>
-                    <Text style={styles.ButtonText}>ثبت نام</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={[styles.Button, styles.ButtonSecendry]}
-                    activeOpacity={0.7}
-                    onPress={qrCodeHandler}>
-                    <Text
-                      style={[styles.ButtonText, styles.ButtonTextSecendry]}>
-                      اسکن کد
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            )}
-          </Formik>
-        </ScrollView>
-      </KeyboardAvoidingView>
+              )}
+            </Formik>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      ) : (
+        <View style={styles.ErrorView}>
+          <Image
+            style={styles.ErrorImage}
+            source={require('../../assets/images/error.jpg')}
+          />
+          <Text style={styles.ErrorMessage}>شما قبلا ثبت نام کرده اید</Text>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={styles.ErrorButton}
+            onPress={goHomeButton}>
+            <Text style={styles.ErrorButtonText}>بازگشت به خانه</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </SafeAreaView>
   );
 };
@@ -236,6 +323,7 @@ const styles = StyleSheet.create({
     borderWidth: moderateScale(2),
     paddingHorizontal: moderateScale(10),
     textAlign: 'right',
+    fontFamily: 'Vazirmatn-Regular',
   },
   Label: {
     fontFamily: 'Vazirmatn-Medium',
@@ -255,5 +343,35 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(12),
     marginTop: moderateScale(5),
     marginLeft: moderateScale(2.5),
+  },
+  ErrorView: {
+    height: '100%',
+    backgroundColor: '#FFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: moderateScale(25),
+  },
+  ErrorMessage: {
+    fontFamily: 'Vazirmatn-Bold',
+    color: 'red',
+    fontSize: moderateScale(18),
+    marginBottom: moderateScale(25),
+  },
+  ErrorImage: {
+    width: '80%',
+    height: undefined,
+    aspectRatio: 1,
+  },
+  ErrorButton: {
+    backgroundColor: '#ff4f5a',
+    width: '60%',
+    paddingVertical: moderateScale(10),
+    borderRadius: moderateScale(6),
+  },
+  ErrorButtonText: {
+    fontFamily: 'Vazirmatn-Black',
+    fontSize: moderateScale(16),
+    color: '#FFF',
+    textAlign: 'center',
   },
 });

@@ -4,24 +4,53 @@ import HelpIcon from '../../assets/svg/HelpIcon';
 import LoginIcon from '../../assets/svg/LoginIcon';
 import WebsiteIcon from '../../assets/svg/WebsiteIcon';
 import {moderateScale} from 'react-native-size-matters';
-import {useNavigation} from '@react-navigation/native';
-
+import {useIsFocused, useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const HomepageButtons = () => {
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
   const RegisterButtonHandler = () => navigation.navigate('RegisterPage');
   const HelpButtonHandler = () => navigation.navigate('HelpScreen');
   const WebsiteButtonHandler = () => navigation.navigate('WebsiteScreen');
+  const LicenceScreenHandler = () => navigation.navigate('RegisterPage');
+  const [isRegistered, setIsRegistered] = React.useState(false);
+
+  const getData = async () => {
+    try {
+      // AsyncStorage.setItem('isRegistered', 'false');
+      const value = await AsyncStorage.getItem('isRegistered');
+      if (value !== null) {
+        setIsRegistered(value === 'false' ? false : true);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  React.useEffect(() => {
+    getData();
+  }, [isFocused]);
+
   return (
     <View style={styles.Container}>
-      <TouchableOpacity
-        style={styles.Button}
-        activeOpacity={0.7}
-        onPress={RegisterButtonHandler}>
-        <Text style={styles.Text}>ثبت نام</Text>
-        <View style={styles.Icon}>
-          <LoginIcon />
-        </View>
-      </TouchableOpacity>
+      {!isRegistered ? (
+        <TouchableOpacity
+          style={styles.Button}
+          activeOpacity={0.7}
+          onPress={RegisterButtonHandler}>
+          <Text style={styles.Text}>ثبت نام</Text>
+          <View style={styles.Icon}>
+            <LoginIcon />
+          </View>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity
+          style={styles.Button}
+          activeOpacity={0.7}
+          onPress={LicenceScreenHandler}>
+          <Text style={[styles.Text, {marginRight: 0}]}>مشاهده لایسنس</Text>
+        </TouchableOpacity>
+      )}
 
       <TouchableOpacity
         style={[styles.Button, styles.SecendryButton]}
