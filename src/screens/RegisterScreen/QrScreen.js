@@ -14,14 +14,22 @@ import CameraIcon from '../../assets/svg/CameraIcon';
 import {RNCamera} from 'react-native-camera';
 import BarcodeMask from 'react-native-barcode-mask';
 import BackHeader from '../../components/BackHeader';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useNavigation} from '@react-navigation/native';
 
 export default function QRScreen() {
   const [flashStatus, setFlashStatus] = React.useState(false);
   const [cameraStatus, setCameraStatus] = React.useState(true);
+  const navigation = useNavigation();
+  const goRegisterPage = () => navigation.navigate('RegisterPage');
 
   const flashHandler = () => setFlashStatus(!flashStatus);
   const cameraHandler = () => setCameraStatus(!cameraStatus);
-  const link = () => Linking.openURL('https://www.google.com/');
+  const link = e => {
+    // console.log(e.data);
+    AsyncStorage.setItem('code', e.data);
+    goRegisterPage();
+  };
   return (
     <SafeAreaView>
       <View style={styles.Container}>

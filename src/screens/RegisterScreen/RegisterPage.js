@@ -26,7 +26,7 @@ import 'yup-phone';
 const RegisterPage = () => {
   const [showRegister, setShowRegister] = React.useState(false);
 
-  const registerPagePlaceholder = () => {
+  const registerPagePlaceholderShowTimeout = () => {
     setTimeout(() => setShowRegister(true), 1000);
   };
 
@@ -36,12 +36,19 @@ const RegisterPage = () => {
   const goHomeButton = () => navigation.navigate('Home');
   const qrCodeHandler = () => navigation.navigate('QrCodeScreen');
   const [isRegistered, setIsRegistered] = React.useState(false);
+  const [code, setCode] = React.useState();
 
   const getData = async () => {
     try {
       const value = await AsyncStorage.getItem('isRegistered');
+      const userCode = await AsyncStorage.getItem('code');
       if (value !== null) {
         setIsRegistered(value === 'false' ? false : true);
+      }
+
+      if (userCode !== null) {
+        console.log(userCode);
+        setCode(userCode);
       }
     } catch (e) {
       console.log(e);
@@ -50,7 +57,8 @@ const RegisterPage = () => {
 
   React.useEffect(() => {
     getData();
-    registerPagePlaceholder();
+    registerPagePlaceholderShowTimeout();
+    AsyncStorage.removeItem('code');
   }, [isFocused]);
 
   const [id, setId] = React.useState(0);
@@ -117,8 +125,7 @@ const RegisterPage = () => {
     <SafeAreaView style={styles.SafeAreaView}>
       {!isRegistered ? (
         <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          style={{flex: 1}}>
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
           <BackHeader
             titleColor="transparent"
             bgColor="transparent"
@@ -210,7 +217,7 @@ const RegisterPage = () => {
                         placeholderTextColor="#33333380"
                         onChangeText={handleChange('code')}
                         onBlur={handleBlur('code')}
-                        value={values.code}
+                        value={code === null ? values.code : code}
                         keyboardType="numeric"
                       />
                       {errors.code && touched.code && (
@@ -362,12 +369,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Vazirmatn-Bold',
     color: 'red',
     fontSize: moderateScale(18),
-    marginBottom: moderateScale(25),
+    marginBottom: moderateScale(50),
   },
   ErrorImage: {
-    width: '80%',
-    height: undefined,
-    aspectRatio: 1,
+    height: '37.5%',
+    resizeMode: 'contain',
   },
   ErrorButton: {
     backgroundColor: '#ff4f5a',

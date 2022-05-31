@@ -2,7 +2,6 @@ import {StyleSheet, Text, View, Image} from 'react-native';
 import React from 'react';
 import Swiper from 'react-native-swiper';
 import {moderateScale} from 'react-native-size-matters';
-import WebView from 'react-native-webview';
 
 const HomepageSlider = () => {
   return (
@@ -34,13 +33,34 @@ const HomepageSlider = () => {
         />
       }>
       <View style={styles.slide}>
-        <Text style={styles.text}>Hello Swiper</Text>
+        <Image
+          style={styles.SliderImage}
+          source={require('../../assets/images/s2.png')}
+        />
+        <Text style={styles.Text}>
+          لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
+          از طراحان گرافیک است
+        </Text>
       </View>
       <View style={styles.slide}>
-        <Text style={styles.text}>Beautiful</Text>
+        <Image
+          style={styles.SliderImage}
+          source={require('../../assets/images/s3.png')}
+        />
+        <Text style={styles.Text}>
+          لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
+          از طراحان گرافیک است
+        </Text>
       </View>
       <View style={styles.slide}>
-        <Text style={styles.text}>And simple</Text>
+        <Image
+          style={styles.SliderImage}
+          source={require('../../assets/images/s1.png')}
+        />
+        <Text style={styles.Text}>
+          لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
+          از طراحان گرافیک است
+        </Text>
       </View>
     </Swiper>
   );
@@ -54,9 +74,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  text: {
-    color: '#fff',
-    fontSize: 30,
-    fontWeight: 'bold',
+  SliderImage: {
+    width: '75%',
+    height: '50%',
+    resizeMode: 'contain',
+  },
+  Text: {
+    fontFamily: 'Vazirmatn-Medium',
+    textAlign: 'center',
+    fontSize: moderateScale(16),
+    paddingHorizontal: moderateScale(25),
+    marginBottom: moderateScale(50),
+    marginTop: moderateScale(25),
+    color: '#FFF',
   },
 });
