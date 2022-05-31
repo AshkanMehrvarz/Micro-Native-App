@@ -24,17 +24,35 @@ import * as yup from 'yup';
 import 'yup-phone';
 
 const RegisterPage = () => {
+  const registerPage = () => {
+    setTimeout(() => {
+      return (
+        <View style={styles.ErrorView}>
+          <Image
+            style={styles.ErrorImage}
+            source={require('../../assets/images/error.jpg')}
+          />
+          <Text style={styles.ErrorMessage}>شما قبلا ثبت نام کرده اید</Text>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={styles.ErrorButton}
+            onPress={goHomeButton}>
+            <Text style={styles.ErrorButtonText}>بازگشت به خانه</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }, 1000);
+  };
+
   const navigation = useNavigation();
   const isFocused = useIsFocused();
-  const RegisterButtonHandler = e =>
-    navigation.navigate('LinenceScreen', {licence: e});
+  const RegisterButtonHandler = () => navigation.navigate('LinenceScreen');
   const goHomeButton = () => navigation.navigate('Home');
   const qrCodeHandler = () => navigation.navigate('QrCodeScreen');
   const [isRegistered, setIsRegistered] = React.useState(false);
 
   const getData = async () => {
     try {
-      // AsyncStorage.setItem('isRegistered', 'false');
       const value = await AsyncStorage.getItem('isRegistered');
       if (value !== null) {
         setIsRegistered(value === 'false' ? false : true);
@@ -78,7 +96,7 @@ const RegisterPage = () => {
       .max(1000000000000000000000000, 'کد وارد شده باید ۲۴ رقم باشد'),
   });
 
-  const formSubmitHandler = async (values, {resetForm}) => {
+  const formSubmitHandler = async values => {
     setSubmitButtonStatus(true);
     setId(id + 1);
     const res = await axios.put(
@@ -101,7 +119,8 @@ const RegisterPage = () => {
       });
     } else {
       AsyncStorage.setItem('isRegistered', 'true');
-      RegisterButtonHandler(res.data.ResultMessage);
+      AsyncStorage.setItem('licence', res.data.ResultMessage);
+      RegisterButtonHandler();
     }
 
     console.log(res);
@@ -252,20 +271,9 @@ const RegisterPage = () => {
           </ScrollView>
         </KeyboardAvoidingView>
       ) : (
-        <View style={styles.ErrorView}>
-          <Image
-            style={styles.ErrorImage}
-            source={require('../../assets/images/error.jpg')}
-          />
-          <Text style={styles.ErrorMessage}>شما قبلا ثبت نام کرده اید</Text>
-          <TouchableOpacity
-            activeOpacity={0.7}
-            style={styles.ErrorButton}
-            onPress={goHomeButton}>
-            <Text style={styles.ErrorButtonText}>بازگشت به خانه</Text>
-          </TouchableOpacity>
-        </View>
+        registerPage()
       )}
+      <Toast />
     </SafeAreaView>
   );
 };

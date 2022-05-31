@@ -12,18 +12,43 @@ import * as React from 'react';
 import {moderateScale} from 'react-native-size-matters';
 import Clipboard from '@react-native-clipboard/clipboard';
 import BackIcon from '../../assets/svg/BackIcon';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
 
-export default function LinenceScreen(props) {
+export default function LinenceScreen() {
   const navigation = useNavigation();
   const goHomeHandler = () => navigation.navigate('Home');
 
-  const {licence} = props.route.params;
-  const [inputValue, setInputValue] = React.useState(licence);
+  const isFocused = useIsFocused();
+
+  const [inputValue, setInputValue] = React.useState();
 
   const copyToClipboard = () => {
     Clipboard.setString(inputValue);
+    Toast.show({
+      type: 'success',
+      text1: 'لایسنس با موفقیت کپی شد',
+      visibilityTime: 5000,
+      topOffset: moderateScale(50),
+    });
   };
+
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('licence');
+      if (value !== null) {
+        setInputValue(value);
+        // console.log(value);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  React.useEffect(() => {
+    getData();
+  }, [isFocused]);
 
   return (
     <SafeAreaView style={{backgroundColor: 'white'}}>
@@ -59,6 +84,7 @@ export default function LinenceScreen(props) {
           </View>
         </View>
       </ScrollView>
+      <Toast />
     </SafeAreaView>
   );
 }
