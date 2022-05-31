@@ -24,24 +24,10 @@ import * as yup from 'yup';
 import 'yup-phone';
 
 const RegisterPage = () => {
-  const registerPage = () => {
-    setTimeout(() => {
-      return (
-        <View style={styles.ErrorView}>
-          <Image
-            style={styles.ErrorImage}
-            source={require('../../assets/images/error.jpg')}
-          />
-          <Text style={styles.ErrorMessage}>شما قبلا ثبت نام کرده اید</Text>
-          <TouchableOpacity
-            activeOpacity={0.7}
-            style={styles.ErrorButton}
-            onPress={goHomeButton}>
-            <Text style={styles.ErrorButtonText}>بازگشت به خانه</Text>
-          </TouchableOpacity>
-        </View>
-      );
-    }, 1000);
+  const [showRegister, setShowRegister] = React.useState(false);
+
+  const registerPagePlaceholder = () => {
+    setTimeout(() => setShowRegister(true), 1000);
   };
 
   const navigation = useNavigation();
@@ -64,6 +50,7 @@ const RegisterPage = () => {
 
   React.useEffect(() => {
     getData();
+    registerPagePlaceholder();
   }, [isFocused]);
 
   const [id, setId] = React.useState(0);
@@ -270,9 +257,21 @@ const RegisterPage = () => {
             </Formik>
           </ScrollView>
         </KeyboardAvoidingView>
-      ) : (
-        registerPage()
-      )}
+      ) : showRegister ? (
+        <View style={styles.ErrorView}>
+          <Image
+            style={styles.ErrorImage}
+            source={require('../../assets/images/error.jpg')}
+          />
+          <Text style={styles.ErrorMessage}>شما قبلا ثبت نام کرده اید</Text>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={styles.ErrorButton}
+            onPress={goHomeButton}>
+            <Text style={styles.ErrorButtonText}>بازگشت به خانه</Text>
+          </TouchableOpacity>
+        </View>
+      ) : null}
       <Toast />
     </SafeAreaView>
   );

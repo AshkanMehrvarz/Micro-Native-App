@@ -12,7 +12,7 @@ const HomepageButtons = () => {
   const RegisterButtonHandler = () => navigation.navigate('RegisterPage');
   const HelpButtonHandler = () => navigation.navigate('HelpScreen');
   const WebsiteButtonHandler = () => navigation.navigate('WebsiteScreen');
-  const LicenceScreenHandler = () => navigation.navigate('LinenceScreen');
+  const LicenceScreenHandler = () => navigation.navigate('RegisterPage');
   const [isRegistered, setIsRegistered] = React.useState(false);
 
   const getData = async () => {
