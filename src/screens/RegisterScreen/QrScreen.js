@@ -26,7 +26,7 @@ export default function QRScreen() {
   const flashHandler = () => setFlashStatus(!flashStatus);
   const cameraHandler = () => setCameraStatus(!cameraStatus);
   const link = e => {
-    // console.log(e.data);
+    console.log(e.data);
     AsyncStorage.setItem('code', e.data);
     goRegisterPage();
   };

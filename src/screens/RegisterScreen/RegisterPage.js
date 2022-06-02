@@ -37,6 +37,7 @@ const RegisterPage = () => {
   const qrCodeHandler = () => navigation.navigate('QrCodeScreen');
   const [isRegistered, setIsRegistered] = React.useState(false);
   const [code, setCode] = React.useState();
+  let setFieldRef = null;
 
   const getData = async () => {
     try {
@@ -47,8 +48,9 @@ const RegisterPage = () => {
       }
 
       if (userCode !== null) {
-        console.log(userCode);
-        setCode(userCode);
+        // console.log(userCode);
+        // setCode(userCode);
+        setFieldRef('code', userCode);
       }
     } catch (e) {
       console.log(e);
@@ -58,7 +60,7 @@ const RegisterPage = () => {
   React.useEffect(() => {
     getData();
     registerPagePlaceholderShowTimeout();
-    AsyncStorage.removeItem('code');
+    // AsyncStorage.removeItem('code');
   }, [isFocused]);
 
   const [id, setId] = React.useState(0);
@@ -117,8 +119,10 @@ const RegisterPage = () => {
       AsyncStorage.setItem('licence', res.data.ResultMessage);
       RegisterButtonHandler();
     }
+  };
 
-    console.log(res);
+  const onCodeChange = (e, setFieldValue) => {
+    setFieldValue('code', e);
   };
 
   return (
@@ -133,6 +137,7 @@ const RegisterPage = () => {
           />
           <ScrollView>
             <Formik
+              enableReinitialize={true}
               validationSchema={registerValidationSchema}
               initialValues={{
                 fullName: '',
@@ -149,118 +154,132 @@ const RegisterPage = () => {
                 errors,
                 isValid,
                 touched,
-              }) => (
-                <View style={styles.Container}>
-                  <Logo size={1.25} />
-                  <View style={styles.InputsDiv}>
-                    <View style={styles.InputsContainer}>
-                      <Text style={styles.Label}>نام و نام خانوادگی</Text>
-                      <TextInput
-                        name="fullName"
-                        style={styles.Input}
-                        placeholderTextColor="#33333380"
-                        onChangeText={handleChange('fullName')}
-                        onBlur={handleBlur('fullName')}
-                        value={values.fullName}
-                        keyboardType="default"
-                      />
-                      {errors.fullName && touched.fullName && (
-                        <Text style={styles.ErrorText}>{errors.fullName}</Text>
-                      )}
-                    </View>
-
-                    <View style={styles.InputsContainer}>
-                      <Text style={styles.Label}>شماره موبایل</Text>
-                      <TextInput
-                        name="phoneNumber"
-                        style={styles.Input}
-                        placeholder={'09306817599'}
-                        placeholderTextColor="#33333380"
-                        onChangeText={handleChange('phoneNumber')}
-                        onBlur={handleBlur('phoneNumber')}
-                        value={values.phoneNumber}
-                        keyboardType="numeric"
-                      />
-                      {errors.phoneNumber && touched.phoneNumber && (
-                        <Text style={styles.ErrorText}>
-                          {errors.phoneNumber}
-                        </Text>
-                      )}
-                    </View>
-
-                    <View style={styles.InputsContainer}>
-                      <Text style={styles.Label}>شماره موبایل مشتری</Text>
-                      <TextInput
-                        name="customerPhoneNumber"
-                        style={styles.Input}
-                        placeholder={'لطفا شماره موبایل مشتری خود را وارد کنید'}
-                        placeholderTextColor="#33333380"
-                        onChangeText={handleChange('customerPhoneNumber')}
-                        onBlur={handleBlur('customerPhoneNumber')}
-                        value={values.customerPhoneNumber}
-                        keyboardType="numeric"
-                      />
-                      {errors.customerPhoneNumber &&
-                        touched.customerPhoneNumber && (
+                setFieldValue,
+              }) => {
+                setFieldRef = setFieldValue;
+                return (
+                  <View style={styles.Container}>
+                    <Logo size={1.25} />
+                    <View style={styles.InputsDiv}>
+                      <View style={styles.InputsContainer}>
+                        <Text style={styles.Label}>نام و نام خانوادگی</Text>
+                        <TextInput
+                          name="fullName"
+                          style={styles.Input}
+                          placeholderTextColor="#33333380"
+                          onChangeText={handleChange('fullName')}
+                          onBlur={handleBlur('fullName')}
+                          value={values.fullName}
+                          keyboardType="default"
+                        />
+                        {errors.fullName && touched.fullName && (
                           <Text style={styles.ErrorText}>
-                            {errors.customerPhoneNumber}
+                            {errors.fullName}
                           </Text>
                         )}
-                    </View>
+                      </View>
 
-                    <View style={styles.InputsContainer}>
-                      <Text style={styles.Label}>کد</Text>
-                      <TextInput
-                        name="code"
-                        style={styles.Input}
-                        placeholder={'لطفا کد خود را وارد کنید'}
-                        placeholderTextColor="#33333380"
-                        onChangeText={handleChange('code')}
-                        onBlur={handleBlur('code')}
-                        value={code === null ? values.code : code}
-                        keyboardType="numeric"
-                      />
-                      {errors.code && touched.code && (
-                        <Text style={styles.ErrorText}>{errors.code}</Text>
+                      <View style={styles.InputsContainer}>
+                        <Text style={styles.Label}>شماره موبایل</Text>
+                        <TextInput
+                          name="phoneNumber"
+                          style={styles.Input}
+                          placeholder={'09306817599'}
+                          placeholderTextColor="#33333380"
+                          onChangeText={handleChange('phoneNumber')}
+                          onBlur={handleBlur('phoneNumber')}
+                          value={values.phoneNumber}
+                          keyboardType="numeric"
+                        />
+                        {errors.phoneNumber && touched.phoneNumber && (
+                          <Text style={styles.ErrorText}>
+                            {errors.phoneNumber}
+                          </Text>
+                        )}
+                      </View>
+
+                      <View style={styles.InputsContainer}>
+                        <Text style={styles.Label}>شماره موبایل مشتری</Text>
+                        <TextInput
+                          name="customerPhoneNumber"
+                          style={styles.Input}
+                          placeholder={
+                            'لطفا شماره موبایل مشتری خود را وارد کنید'
+                          }
+                          placeholderTextColor="#33333380"
+                          onChangeText={handleChange('customerPhoneNumber')}
+                          onBlur={handleBlur('customerPhoneNumber')}
+                          value={values.customerPhoneNumber}
+                          keyboardType="numeric"
+                        />
+                        {errors.customerPhoneNumber &&
+                          touched.customerPhoneNumber && (
+                            <Text style={styles.ErrorText}>
+                              {errors.customerPhoneNumber}
+                            </Text>
+                          )}
+                      </View>
+
+                      <View style={styles.InputsContainer}>
+                        <Text style={styles.Label}>کد</Text>
+                        <TextInput
+                          name="code"
+                          style={styles.Input}
+                          placeholder={'لطفا کد خود را وارد کنید'}
+                          placeholderTextColor="#33333380"
+                          onChangeText={e => onCodeChange(e, setFieldValue)}
+                          onBlur={handleBlur('code')}
+                          value={values.code}
+                          keyboardType="numeric"
+                        />
+                        {errors.code && touched.code && (
+                          <Text style={styles.ErrorText}>{errors.code}</Text>
+                        )}
+                      </View>
+                    </View>
+                    <View style={styles.ButtonsDiv}>
+                      {!submitButtonStatus ? (
+                        <TouchableOpacity
+                          style={[
+                            styles.Button,
+                            {opacity: !isValid ? 0.25 : 1},
+                          ]}
+                          activeOpacity={0.7}
+                          onPress={handleSubmit}
+                          disabled={!isValid}>
+                          <Text style={styles.ButtonText}>ثبت نام</Text>
+                        </TouchableOpacity>
+                      ) : (
+                        <TouchableOpacity
+                          style={[
+                            styles.Button,
+                            {
+                              flexDirection: 'row-reverse',
+                              justifyContent: 'space-around',
+                              paddingHorizontal: moderateScale(100),
+                            },
+                          ]}
+                          disabled={true}>
+                          <ActivityIndicator size="small" color="#FFF" />
+                        </TouchableOpacity>
                       )}
+
+                      <TouchableOpacity
+                        style={[styles.Button, styles.ButtonSecendry]}
+                        activeOpacity={0.7}
+                        onPress={qrCodeHandler}>
+                        <Text
+                          style={[
+                            styles.ButtonText,
+                            styles.ButtonTextSecendry,
+                          ]}>
+                          اسکن کد
+                        </Text>
+                      </TouchableOpacity>
                     </View>
                   </View>
-                  <View style={styles.ButtonsDiv}>
-                    {!submitButtonStatus ? (
-                      <TouchableOpacity
-                        style={[styles.Button, {opacity: !isValid ? 0.25 : 1}]}
-                        activeOpacity={0.7}
-                        onPress={handleSubmit}
-                        disabled={!isValid}>
-                        <Text style={styles.ButtonText}>ثبت نام</Text>
-                      </TouchableOpacity>
-                    ) : (
-                      <TouchableOpacity
-                        style={[
-                          styles.Button,
-                          {
-                            flexDirection: 'row-reverse',
-                            justifyContent: 'space-around',
-                            paddingHorizontal: moderateScale(100),
-                          },
-                        ]}
-                        disabled={true}>
-                        <ActivityIndicator size="small" color="#FFF" />
-                      </TouchableOpacity>
-                    )}
-
-                    <TouchableOpacity
-                      style={[styles.Button, styles.ButtonSecendry]}
-                      activeOpacity={0.7}
-                      onPress={qrCodeHandler}>
-                      <Text
-                        style={[styles.ButtonText, styles.ButtonTextSecendry]}>
-                        اسکن کد
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              )}
+                );
+              }}
             </Formik>
           </ScrollView>
         </KeyboardAvoidingView>
