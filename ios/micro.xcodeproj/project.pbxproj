@@ -13,6 +13,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2B761054100F481B85876E28 /* Vazirmatn-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 49D915B5FA8240B495775CCE /* Vazirmatn-Black.ttf */; };
+		303AE009285B7BF200F54B9F /* Mj_Unique Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 303AE00B285B7BF200F54B9F /* Mj_Unique Bold.ttf */; };
 		42F06DDDAACA4CD5962F6E7E /* Vazirmatn-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8384689FB21944A792C2C1B4 /* Vazirmatn-SemiBold.ttf */; };
 		501B988BF3C34C778769F2A6 /* Vazirmatn-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DCC4BB6F40BA4CA8B972F8B9 /* Vazirmatn-ExtraLight.ttf */; };
 		7699B88040F8A987B510C191 /* libPods-micro-microTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-micro-microTests.a */; };
@@ -23,6 +24,7 @@
 		D9F772F65D014923AC49B221 /* Vazirmatn-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D52374EA97F4BCA987244C7 /* Vazirmatn-Light.ttf */; };
 		DE44CBC7F61B45228D1B3939 /* Vazirmatn-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 576A70582CA64398B9489DC3 /* Vazirmatn-Medium.ttf */; };
 		EC30BA22A85244929FFF72B7 /* Vazirmatn-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 96E6D34896C54F9BBA974F47 /* Vazirmatn-Thin.ttf */; };
+		1D6B72B9B0AC4F7A9D3C844B /* Mj_Unique Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D966BB7441D49328F79C693 /* Mj_Unique Bold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,22 +48,24 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = micro/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = micro/main.m; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-micro-microTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-micro-microTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		303AE00A285B7BF200F54B9F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file; name = Base; path = "Base.lproj/Mj_Unique Bold.ttf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-micro.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-micro.debug.xcconfig"; path = "Target Support Files/Pods-micro/Pods-micro.debug.xcconfig"; sourceTree = "<group>"; };
-		49D915B5FA8240B495775CCE /* Vazirmatn-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Vazirmatn-Black.ttf"; path = "../src/assets/fonts/Vazirmatn-Black.ttf"; sourceTree = "<group>"; };
-		4D52374EA97F4BCA987244C7 /* Vazirmatn-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Vazirmatn-Light.ttf"; path = "../src/assets/fonts/Vazirmatn-Light.ttf"; sourceTree = "<group>"; };
+		49D915B5FA8240B495775CCE /* Vazirmatn-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Vazirmatn-Black.ttf"; path = "../src/assets/fonts/Vazirmatn-Black.ttf"; sourceTree = "<group>"; };
+		4D52374EA97F4BCA987244C7 /* Vazirmatn-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Vazirmatn-Light.ttf"; path = "../src/assets/fonts/Vazirmatn-Light.ttf"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-micro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-micro.release.xcconfig"; path = "Target Support Files/Pods-micro/Pods-micro.release.xcconfig"; sourceTree = "<group>"; };
-		576A70582CA64398B9489DC3 /* Vazirmatn-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Vazirmatn-Medium.ttf"; path = "../src/assets/fonts/Vazirmatn-Medium.ttf"; sourceTree = "<group>"; };
+		576A70582CA64398B9489DC3 /* Vazirmatn-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Vazirmatn-Medium.ttf"; path = "../src/assets/fonts/Vazirmatn-Medium.ttf"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-micro-microTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-micro-microTests.debug.xcconfig"; path = "Target Support Files/Pods-micro-microTests/Pods-micro-microTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-micro.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-micro.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = micro/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		8384689FB21944A792C2C1B4 /* Vazirmatn-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Vazirmatn-SemiBold.ttf"; path = "../src/assets/fonts/Vazirmatn-SemiBold.ttf"; sourceTree = "<group>"; };
+		8384689FB21944A792C2C1B4 /* Vazirmatn-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Vazirmatn-SemiBold.ttf"; path = "../src/assets/fonts/Vazirmatn-SemiBold.ttf"; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-micro-microTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-micro-microTests.release.xcconfig"; path = "Target Support Files/Pods-micro-microTests/Pods-micro-microTests.release.xcconfig"; sourceTree = "<group>"; };
-		96E6D34896C54F9BBA974F47 /* Vazirmatn-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Vazirmatn-Thin.ttf"; path = "../src/assets/fonts/Vazirmatn-Thin.ttf"; sourceTree = "<group>"; };
-		CB4F3DF3DB2044D6880C2188 /* Vazirmatn-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Vazirmatn-Regular.ttf"; path = "../src/assets/fonts/Vazirmatn-Regular.ttf"; sourceTree = "<group>"; };
-		D90C9CD8004D489990F0903F /* Vazirmatn-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Vazirmatn-Bold.ttf"; path = "../src/assets/fonts/Vazirmatn-Bold.ttf"; sourceTree = "<group>"; };
-		DCC4BB6F40BA4CA8B972F8B9 /* Vazirmatn-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Vazirmatn-ExtraLight.ttf"; path = "../src/assets/fonts/Vazirmatn-ExtraLight.ttf"; sourceTree = "<group>"; };
-		DF08F7DC241948348C3A1F35 /* Vazirmatn-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Vazirmatn-ExtraBold.ttf"; path = "../src/assets/fonts/Vazirmatn-ExtraBold.ttf"; sourceTree = "<group>"; };
+		96E6D34896C54F9BBA974F47 /* Vazirmatn-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Vazirmatn-Thin.ttf"; path = "../src/assets/fonts/Vazirmatn-Thin.ttf"; sourceTree = "<group>"; };
+		CB4F3DF3DB2044D6880C2188 /* Vazirmatn-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Vazirmatn-Regular.ttf"; path = "../src/assets/fonts/Vazirmatn-Regular.ttf"; sourceTree = "<group>"; };
+		D90C9CD8004D489990F0903F /* Vazirmatn-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Vazirmatn-Bold.ttf"; path = "../src/assets/fonts/Vazirmatn-Bold.ttf"; sourceTree = "<group>"; };
+		DCC4BB6F40BA4CA8B972F8B9 /* Vazirmatn-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Vazirmatn-ExtraLight.ttf"; path = "../src/assets/fonts/Vazirmatn-ExtraLight.ttf"; sourceTree = "<group>"; };
+		DF08F7DC241948348C3A1F35 /* Vazirmatn-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Vazirmatn-ExtraBold.ttf"; path = "../src/assets/fonts/Vazirmatn-ExtraBold.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		3D966BB7441D49328F79C693 /* Mj_Unique Bold.ttf */ = {isa = PBXFileReference; name = "Mj_Unique Bold.ttf"; path = "../src/assets/fonts/Mj_Unique Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,9 +140,10 @@
 				CB4F3DF3DB2044D6880C2188 /* Vazirmatn-Regular.ttf */,
 				8384689FB21944A792C2C1B4 /* Vazirmatn-SemiBold.ttf */,
 				96E6D34896C54F9BBA974F47 /* Vazirmatn-Thin.ttf */,
+				303AE00B285B7BF200F54B9F /* Mj_Unique Bold.ttf */,
+				3D966BB7441D49328F79C693 /* Mj_Unique Bold.ttf */,
 			);
 			name = Resources;
-			path = "";
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -195,7 +200,6 @@
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */,
 				F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -218,7 +222,6 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */,
 				E235C05ADACE081382539298 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -289,6 +292,8 @@
 				8D10A3C7B48C496BBA433B5A /* Vazirmatn-Regular.ttf in Resources */,
 				42F06DDDAACA4CD5962F6E7E /* Vazirmatn-SemiBold.ttf in Resources */,
 				EC30BA22A85244929FFF72B7 /* Vazirmatn-Thin.ttf in Resources */,
+				303AE009285B7BF200F54B9F /* Mj_Unique Bold.ttf in Resources */,
+				1D6B72B9B0AC4F7A9D3C844B /* Mj_Unique Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,23 +313,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
-		};
-		00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-micro/Pods-micro-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-micro/Pods-micro-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-micro/Pods-micro-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 		A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -368,23 +356,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-micro-microTests/Pods-micro-microTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-micro-microTests/Pods-micro-microTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-micro-microTests/Pods-micro-microTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E235C05ADACE081382539298 /* [CP] Copy Pods Resources */ = {
@@ -469,6 +440,18 @@
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		303AE00B285B7BF200F54B9F /* Mj_Unique Bold.ttf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				303AE00A285B7BF200F54B9F /* Base */,
+			);
+			name = "Mj_Unique Bold.ttf";
+			path = ../src/assets/fonts;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {

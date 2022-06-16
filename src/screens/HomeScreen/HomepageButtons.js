@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import * as React from 'react';
 import HelpIcon from '../../assets/svg/HelpIcon';
-import LoginIcon from '../../assets/svg/LoginIcon';
+import LicenceIcon from '../../assets/svg/LicenceIcon';
 import WebsiteIcon from '../../assets/svg/WebsiteIcon';
 import {moderateScale} from 'react-native-size-matters';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
@@ -38,9 +38,9 @@ const HomepageButtons = () => {
           style={styles.Button}
           activeOpacity={0.7}
           onPress={RegisterButtonHandler}>
-          <Text style={styles.Text}>ثبت نام</Text>
+          <Text style={styles.Text}>دریافت لایسنس</Text>
           <View style={styles.Icon}>
-            <LoginIcon />
+            <LicenceIcon />
           </View>
         </TouchableOpacity>
       ) : (
@@ -116,6 +116,6 @@ const styles = StyleSheet.create({
   },
   Icon: {
     position: 'absolute',
-    right: moderateScale(100),
+    right: moderateScale(25),
   },
 });

@@ -3,6 +3,7 @@ import Slider from './HomepageSlider';
 import * as React from 'react';
 import HomepageButtons from './HomepageButtons';
 import {moderateScale} from 'react-native-size-matters';
+import {colors} from '../../assets/theme/Theme';
 
 const HomePage = () => {
   return (
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#404CCF',
   },
   Container: {
-    backgroundColor: '#404CCF',
+    backgroundColor: colors.primary,
     height: '100%',
     justifyContent: 'flex-end',
     alignItems: 'center',

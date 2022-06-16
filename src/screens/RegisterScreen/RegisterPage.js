@@ -22,9 +22,11 @@ import Toast from 'react-native-toast-message';
 import {Formik} from 'formik';
 import * as yup from 'yup';
 import 'yup-phone';
+import NetInfo from '@react-native-community/netinfo';
 
 const RegisterPage = () => {
   const [showRegister, setShowRegister] = React.useState(false);
+  const [isConnectedToInternet, setIsConnectedToInternet] = React.useState();
 
   const registerPagePlaceholderShowTimeout = () => {
     setTimeout(() => setShowRegister(true), 1000);
@@ -36,7 +38,6 @@ const RegisterPage = () => {
   const goHomeButton = () => navigation.navigate('Home');
   const qrCodeHandler = () => navigation.navigate('QrCodeScreen');
   const [isRegistered, setIsRegistered] = React.useState(false);
-  const [code, setCode] = React.useState();
   let setFieldRef = null;
 
   const getData = async () => {
@@ -48,8 +49,6 @@ const RegisterPage = () => {
       }
 
       if (userCode !== null) {
-        // console.log(userCode);
-        // setCode(userCode);
         setFieldRef('code', userCode);
       }
     } catch (e) {
@@ -57,9 +56,16 @@ const RegisterPage = () => {
     }
   };
 
+  const getNetInfo = () => {
+    NetInfo.fetch().then(state => {
+      setIsConnectedToInternet(state.isConnected);
+    });
+  };
+
   React.useEffect(() => {
     getData();
     registerPagePlaceholderShowTimeout();
+    getNetInfo();
     // AsyncStorage.removeItem('code');
   }, [isFocused]);
 
@@ -70,16 +76,7 @@ const RegisterPage = () => {
       .string()
       .max(32, 'تعداد کاراکتر ها بیش از حد مجاز است')
       .min(4, 'تعداد کاراکتر ها کمتر از حد مجاز است')
-      .matches(
-        /[پچجحخهعغفقثصضشسیبلاتنمکگوئدذرزطظژؤإأءًٌٍَُِّ\s]+$/,
-        'فقط الفبای فارسی مجاز است',
-      )
       .required('نام و نام خانوادگی الزامی میباشد'),
-
-    phoneNumber: yup
-      .string()
-      .phone('IR', true, 'شماره وارد شده صحیح نمیباشد')
-      .required('شماره موبایل الزامی میباشد'),
 
     customerPhoneNumber: yup
       .string()
@@ -94,30 +91,55 @@ const RegisterPage = () => {
   });
 
   const formSubmitHandler = async values => {
-    setSubmitButtonStatus(true);
-    setId(id + 1);
-    const res = await axios.put(
-      'http://151.106.35.10:2000/api/getlicence/getlicence',
-      {
-        Name: values.fullName,
-        UserId: id,
-        CodeMic: values.code,
-        MobileNasab: values.phoneNumber,
-        MobileMoshtari: values.customerPhoneNumber,
-      },
-    );
-    setSubmitButtonStatus(false);
-    if (res.data.ResultCode === 1) {
+    if (isConnectedToInternet) {
+      try {
+        setSubmitButtonStatus(true);
+        setId(id + 1);
+        const res = await axios.put(
+          'http://151.106.35.10:2000/api/getlicence/getlicence',
+          {
+            Name: values.fullName,
+            UserId: id,
+            CodeMic: values.code,
+            MobileNasab: 0,
+            MobileMoshtari: values.customerPhoneNumber,
+          },
+        );
+        console.log(res);
+        if (res.status === 200) {
+          setSubmitButtonStatus(false);
+          if (res.data.ResultCode === 1) {
+            Toast.show({
+              type: 'error',
+              text1: 'کد وارد شده اشتباه است',
+              visibilityTime: 5000,
+              topOffset: moderateScale(50),
+            });
+          } else {
+            AsyncStorage.setItem('isRegistered', 'true');
+            AsyncStorage.setItem('licence', res.data.ResultMessage);
+            RegisterButtonHandler();
+          }
+        } else {
+          console.log('errrrorrrr');
+          Toast.show({
+            type: 'error',
+            text1: 'خطایی از طرف سرور رخ داده است',
+            visibilityTime: 5000,
+            topOffset: moderateScale(50),
+          });
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      console.log('errrrrororororoororororoo');
       Toast.show({
         type: 'error',
-        text1: 'کد وارد شده اشتباه است',
+        text1: 'دستگاه شما به اینترنت وصل نمیباشد',
         visibilityTime: 5000,
         topOffset: moderateScale(50),
       });
-    } else {
-      AsyncStorage.setItem('isRegistered', 'true');
-      AsyncStorage.setItem('licence', res.data.ResultMessage);
-      RegisterButtonHandler();
     }
   };
 
@@ -141,7 +163,6 @@ const RegisterPage = () => {
               validationSchema={registerValidationSchema}
               initialValues={{
                 fullName: '',
-                phoneNumber: '',
                 customerPhoneNumber: '',
                 code: '',
               }}
@@ -166,6 +187,9 @@ const RegisterPage = () => {
                         <TextInput
                           name="fullName"
                           style={styles.Input}
+                          placeholder={
+                            'لطفا نام و نام خانوادگی خود را وارد کنید'
+                          }
                           placeholderTextColor="#33333380"
                           onChangeText={handleChange('fullName')}
                           onBlur={handleBlur('fullName')}
@@ -175,25 +199,6 @@ const RegisterPage = () => {
                         {errors.fullName && touched.fullName && (
                           <Text style={styles.ErrorText}>
                             {errors.fullName}
-                          </Text>
-                        )}
-                      </View>
-
-                      <View style={styles.InputsContainer}>
-                        <Text style={styles.Label}>شماره موبایل</Text>
-                        <TextInput
-                          name="phoneNumber"
-                          style={styles.Input}
-                          placeholder={'09306817599'}
-                          placeholderTextColor="#33333380"
-                          onChangeText={handleChange('phoneNumber')}
-                          onBlur={handleBlur('phoneNumber')}
-                          value={values.phoneNumber}
-                          keyboardType="numeric"
-                        />
-                        {errors.phoneNumber && touched.phoneNumber && (
-                          <Text style={styles.ErrorText}>
-                            {errors.phoneNumber}
                           </Text>
                         )}
                       </View>
@@ -247,7 +252,7 @@ const RegisterPage = () => {
                           activeOpacity={0.7}
                           onPress={handleSubmit}
                           disabled={!isValid}>
-                          <Text style={styles.ButtonText}>ثبت نام</Text>
+                          <Text style={styles.ButtonText}>دریافت لایسنس</Text>
                         </TouchableOpacity>
                       ) : (
                         <TouchableOpacity
@@ -312,10 +317,8 @@ const styles = StyleSheet.create({
   },
   Container: {
     paddingHorizontal: moderateScale(25),
-    backgroundColor: '#FFF',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    height: '92.5%',
+    height: '100%',
   },
   InputsDiv: {
     width: '100%',
@@ -367,7 +370,7 @@ const styles = StyleSheet.create({
     marginRight: moderateScale(2.5),
   },
   InputsContainer: {
-    marginVertical: moderateScale(7.5),
+    marginVertical: moderateScale(10),
   },
   ErrorText: {
     color: 'red',

@@ -1,0 +1,16 @@
+export const colors = {
+  primary: '#404CCF',
+  grey5: '#F2F2F2',
+  grey4: '#BDBDBD',
+  grey3: '#828282',
+  grey2: '#4F4F4F',
+  grey1: '#333333',
+  done1: '#27AE60',
+  done2: 'rgba(39, 174, 96, 0.25)',
+  error1: '#EB5757',
+  error2: 'rgba(235, 87, 87, 0.25)',
+  warning1: '#F2C94C',
+  warning2: 'rgba(242, 201, 76, 0.25)',
+  info1: '#2D9CDB',
+  info2: 'rgba(45, 156, 219, 0.25)',
+};

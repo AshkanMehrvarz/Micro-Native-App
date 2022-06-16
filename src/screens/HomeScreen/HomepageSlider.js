@@ -1,68 +1,109 @@
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Animated,
+  TouchableOpacity,
+} from 'react-native';
 import React from 'react';
 import Swiper from 'react-native-swiper';
 import {moderateScale} from 'react-native-size-matters';
+import ArrowIcon from '../../assets/svg/ArrowIcon';
+import DoneIcon from '../../assets/svg/DoneIcon';
+import * as Progress from 'react-native-progress';
 
 const HomepageSlider = () => {
+  const [sliderSkiped, setSliderSkiped] = React.useState(0.33);
+  const fadeAnim = new Animated.Value(0);
+  const sizeAnim = new Animated.Value(0);
+
+  const sliderPagination = index => {
+    if (index === 0) {
+      setSliderSkiped(1 / 3);
+    } else if (index === 1) {
+      setSliderSkiped(2 / 3);
+    } else if (index === 2) {
+      setSliderSkiped(3 / 3);
+    }
+  };
+
+  Animated.timing(fadeAnim, {
+    toValue: 1,
+    duration: 200,
+    useNativeDriver: true,
+  }).start();
+
   return (
-    <Swiper
-      style={styles.wrapper}
-      showsButtons={false}
-      loop={true}
-      autoplay={true}
-      dot={
-        <View
-          style={{
-            backgroundColor: 'rgba(0,0,0,.2)',
-            width: moderateScale(20),
-            height: moderateScale(5),
-            borderRadius: 9999,
-            margin: moderateScale(5),
-          }}
+    <View>
+      <Swiper
+        style={{
+          position: 'relative',
+        }}
+        onIndexChanged={sliderPagination}
+        showsPagination={false}
+        showsButtons={true}
+        loop={false}
+        autoplay={false}
+        nextButton={
+          <View style={styles.SliderNextButton}>
+            <ArrowIcon />
+          </View>
+        }
+        buttonWrapperStyle={{
+          alignItems: 'flex-end',
+          justifyContent: 'center',
+        }}
+        prevButton={<View></View>}>
+        <View style={styles.slide}>
+          <Image
+            style={styles.SliderImage}
+            source={require('../../assets/images/s1.png')}
+          />
+          <Text style={styles.TextTitle}>متن عنوان تستی</Text>
+          <Text style={styles.TextDis}>
+            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+            استفاده از طراحان گرافیک است
+          </Text>
+        </View>
+        <View style={styles.slide}>
+          <Image
+            style={styles.SliderImage}
+            source={require('../../assets/images/s2.png')}
+          />
+          <Text style={styles.TextTitle}>متن عنوان تستی</Text>
+          <Text style={styles.TextDis}>
+            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+            استفاده از طراحان گرافیک است
+          </Text>
+        </View>
+        <View style={styles.slide}>
+          <Image
+            style={styles.SliderImage}
+            source={require('../../assets/images/s3.png')}
+          />
+          <Text style={styles.TextTitle}>متن عنوان تستی</Text>
+          <Text style={styles.TextDis}>
+            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+            استفاده از طراحان گرافیک است
+          </Text>
+          <TouchableOpacity style={styles.DoneButton}>
+            <Animated.View style={{opacity: fadeAnim}}>
+              <DoneIcon />
+            </Animated.View>
+          </TouchableOpacity>
+        </View>
+      </Swiper>
+      <View style={styles.PaginationDiv}>
+        <Progress.Circle
+          size={140}
+          animated={true}
+          progress={sliderSkiped}
+          color={'white'}
+          borderWidth={0}
         />
-      }
-      activeDot={
-        <View
-          style={{
-            backgroundColor: 'white',
-            width: moderateScale(20),
-            height: moderateScale(5),
-            borderRadius: 9999,
-            margin: moderateScale(5),
-          }}
-        />
-      }>
-      <View style={styles.slide}>
-        <Image
-          style={styles.SliderImage}
-          source={require('../../assets/images/s2.png')}
-        />
-        <Text style={styles.Text}>
-          لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
-          از طراحان گرافیک است
-        </Text>
       </View>
-      <View style={styles.slide}>
-        <Image
-          style={styles.SliderImage}
-          source={require('../../assets/images/s3.png')}
-        />
-        <Text style={styles.Text}>
-          لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
-          از طراحان گرافیک است
-        </Text>
-      </View>
-      <View style={styles.slide}>
-        <Image
-          style={styles.SliderImage}
-          source={require('../../assets/images/s1.png')}
-        />
-        <Text style={styles.Text}>
-          لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
-          از طراحان گرافیک است
-        </Text>
-      </View>
-    </Swiper>
+    </View>
   );
 };
 
@@ -70,22 +111,67 @@ export default HomepageSlider;
 
 const styles = StyleSheet.create({
   slide: {
-    flex: 1,
-    justifyContent: 'center',
+    height: '90%',
+    justifyContent: 'flex-start',
     alignItems: 'center',
+    position: 'relative',
   },
   SliderImage: {
-    width: '75%',
+    width: '100%',
     height: '50%',
     resizeMode: 'contain',
   },
-  Text: {
-    fontFamily: 'Vazirmatn-Medium',
+  SliderImageBg: {
+    width: '100%',
+    height: '50%',
+    position: 'absolute',
+    zIndex: -1,
+    top: moderateScale(100),
+    resizeMode: 'contain',
+  },
+  SliderNextButton: {
+    backgroundColor: '#FFFFFF',
+    height: moderateScale(100),
+    width: moderateScale(100),
+    borderRadius: 99999,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  PaginationDiv: {
+    height: moderateScale(100),
+    width: '100%',
+    position: 'absolute',
+    bottom: moderateScale(10),
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: -2,
+  },
+  TextTitle: {
+    fontFamily: 'Vazirmatn-Bold',
+    paddingHorizontal: moderateScale(50),
+    marginTop: moderateScale(50),
     textAlign: 'center',
-    fontSize: moderateScale(16),
-    paddingHorizontal: moderateScale(25),
-    marginBottom: moderateScale(50),
-    marginTop: moderateScale(25),
+    fontSize: moderateScale(28),
     color: '#FFF',
+    width: '100%',
+  },
+  TextDis: {
+    fontFamily: 'Vazirmatn-Regular',
+    paddingHorizontal: moderateScale(50),
+    marginTop: moderateScale(10),
+    textAlign: 'right',
+    fontSize: moderateScale(16),
+    color: '#FFF',
+    width: '100%',
+  },
+  DoneButton: {
+    backgroundColor: '#FFF',
+    height: moderateScale(100),
+    width: moderateScale(100),
+    borderRadius: 99999,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: moderateScale(-57.5),
   },
 });
