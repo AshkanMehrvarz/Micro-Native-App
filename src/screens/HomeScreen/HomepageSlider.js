@@ -12,11 +12,12 @@ import {moderateScale} from 'react-native-size-matters';
 import ArrowIcon from '../../assets/svg/ArrowIcon';
 import DoneIcon from '../../assets/svg/DoneIcon';
 import * as Progress from 'react-native-progress';
+import {useNavigation} from '@react-navigation/native';
 
 const HomepageSlider = () => {
-  const [sliderSkiped, setSliderSkiped] = React.useState(0.33);
+  const [sliderSkiped, setSliderSkiped] = React.useState(1 / 3);
   const fadeAnim = new Animated.Value(0);
-  const sizeAnim = new Animated.Value(0);
+  const navigation = useNavigation();
 
   const sliderPagination = index => {
     if (index === 0) {
@@ -33,6 +34,8 @@ const HomepageSlider = () => {
     duration: 200,
     useNativeDriver: true,
   }).start();
+
+  const goEnterToApp = () => navigation.navigate('EnterToApp');
 
   return (
     <View>
@@ -87,7 +90,7 @@ const HomepageSlider = () => {
             لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
             استفاده از طراحان گرافیک است
           </Text>
-          <TouchableOpacity style={styles.DoneButton}>
+          <TouchableOpacity style={styles.DoneButton} onPress={goEnterToApp}>
             <Animated.View style={{opacity: fadeAnim}}>
               <DoneIcon />
             </Animated.View>
@@ -101,6 +104,7 @@ const HomepageSlider = () => {
           progress={sliderSkiped}
           color={'white'}
           borderWidth={0}
+          animationType={'spring'}
         />
       </View>
     </View>
@@ -136,6 +140,14 @@ const styles = StyleSheet.create({
     borderRadius: 99999,
     justifyContent: 'center',
     alignItems: 'center',
+    shadowColor: '#FFF',
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: moderateScale(10),
+    elevation: 5,
   },
   PaginationDiv: {
     height: moderateScale(100),

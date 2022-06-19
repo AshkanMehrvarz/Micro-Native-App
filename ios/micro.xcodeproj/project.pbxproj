@@ -13,7 +13,6 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2B761054100F481B85876E28 /* Vazirmatn-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 49D915B5FA8240B495775CCE /* Vazirmatn-Black.ttf */; };
-		303AE009285B7BF200F54B9F /* Mj_Unique Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 303AE00B285B7BF200F54B9F /* Mj_Unique Bold.ttf */; };
 		42F06DDDAACA4CD5962F6E7E /* Vazirmatn-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8384689FB21944A792C2C1B4 /* Vazirmatn-SemiBold.ttf */; };
 		501B988BF3C34C778769F2A6 /* Vazirmatn-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DCC4BB6F40BA4CA8B972F8B9 /* Vazirmatn-ExtraLight.ttf */; };
 		7699B88040F8A987B510C191 /* libPods-micro-microTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-micro-microTests.a */; };
@@ -24,7 +23,6 @@
 		D9F772F65D014923AC49B221 /* Vazirmatn-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D52374EA97F4BCA987244C7 /* Vazirmatn-Light.ttf */; };
 		DE44CBC7F61B45228D1B3939 /* Vazirmatn-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 576A70582CA64398B9489DC3 /* Vazirmatn-Medium.ttf */; };
 		EC30BA22A85244929FFF72B7 /* Vazirmatn-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 96E6D34896C54F9BBA974F47 /* Vazirmatn-Thin.ttf */; };
-		1D6B72B9B0AC4F7A9D3C844B /* Mj_Unique Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D966BB7441D49328F79C693 /* Mj_Unique Bold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,7 +46,6 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = micro/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = micro/main.m; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-micro-microTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-micro-microTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		303AE00A285B7BF200F54B9F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file; name = Base; path = "Base.lproj/Mj_Unique Bold.ttf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-micro.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-micro.debug.xcconfig"; path = "Target Support Files/Pods-micro/Pods-micro.debug.xcconfig"; sourceTree = "<group>"; };
 		49D915B5FA8240B495775CCE /* Vazirmatn-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Vazirmatn-Black.ttf"; path = "../src/assets/fonts/Vazirmatn-Black.ttf"; sourceTree = "<group>"; };
 		4D52374EA97F4BCA987244C7 /* Vazirmatn-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Vazirmatn-Light.ttf"; path = "../src/assets/fonts/Vazirmatn-Light.ttf"; sourceTree = "<group>"; };
@@ -65,7 +62,6 @@
 		DCC4BB6F40BA4CA8B972F8B9 /* Vazirmatn-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Vazirmatn-ExtraLight.ttf"; path = "../src/assets/fonts/Vazirmatn-ExtraLight.ttf"; sourceTree = "<group>"; };
 		DF08F7DC241948348C3A1F35 /* Vazirmatn-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Vazirmatn-ExtraBold.ttf"; path = "../src/assets/fonts/Vazirmatn-ExtraBold.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		3D966BB7441D49328F79C693 /* Mj_Unique Bold.ttf */ = {isa = PBXFileReference; name = "Mj_Unique Bold.ttf"; path = "../src/assets/fonts/Mj_Unique Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,8 +136,6 @@
 				CB4F3DF3DB2044D6880C2188 /* Vazirmatn-Regular.ttf */,
 				8384689FB21944A792C2C1B4 /* Vazirmatn-SemiBold.ttf */,
 				96E6D34896C54F9BBA974F47 /* Vazirmatn-Thin.ttf */,
-				303AE00B285B7BF200F54B9F /* Mj_Unique Bold.ttf */,
-				3D966BB7441D49328F79C693 /* Mj_Unique Bold.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -292,8 +286,6 @@
 				8D10A3C7B48C496BBA433B5A /* Vazirmatn-Regular.ttf in Resources */,
 				42F06DDDAACA4CD5962F6E7E /* Vazirmatn-SemiBold.ttf in Resources */,
 				EC30BA22A85244929FFF72B7 /* Vazirmatn-Thin.ttf in Resources */,
-				303AE009285B7BF200F54B9F /* Mj_Unique Bold.ttf in Resources */,
-				1D6B72B9B0AC4F7A9D3C844B /* Mj_Unique Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,18 +432,6 @@
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		303AE00B285B7BF200F54B9F /* Mj_Unique Bold.ttf */ = {
-			isa = PBXVariantGroup;
-			children = (
-				303AE00A285B7BF200F54B9F /* Base */,
-			);
-			name = "Mj_Unique Bold.ttf";
-			path = ../src/assets/fonts;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {

@@ -7,7 +7,9 @@ import RegisterPage from './RegisterScreen/RegisterPage';
 import QRScreen from './RegisterScreen/QrScreen';
 import LinenceScreen from './LicenceScreen/LicenceScreen';
 import LoginWithOTP from './LoginWithOTP/LoginWithOTP';
-import GetMobile from './LoginWithOTP/GetMobile';
+import EnterToApp from './LoginWithOTP/EnterToApp';
+import GetOTPCode from './LoginWithOTP/GetOTPCode.js';
+import Register from './LoginWithOTP/Register';
 const Stack = createStackNavigator();
 
 export default function MyStack() {
@@ -24,7 +26,9 @@ export default function MyStack() {
       <Stack.Screen name="WebsiteScreen" component={WebsiteScreen} />
       <Stack.Screen name="QrCodeScreen" component={QRScreen} />
       <Stack.Screen name="LinenceScreen" component={LinenceScreen} />
-      <Stack.Screen name="GetMobile" component={GetMobile} />
+      <Stack.Screen name="EnterToApp" component={EnterToApp} />
+      <Stack.Screen name="GetOTPCode" component={GetOTPCode} />
+      <Stack.Screen name="Register" component={Register} />
     </Stack.Navigator>
   );
 }
