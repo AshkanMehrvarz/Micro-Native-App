@@ -15,18 +15,22 @@ import PhoneIcon from '../../assets/svg/PhoneIcon';
 import {Formik} from 'formik';
 import * as yup from 'yup';
 import 'yup-phone';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useIsFocused} from '@react-navigation/native';
 
 const EnterToApp = () => {
   const firstAnimatedView = new Animated.Value(0);
   const firstAnimatedFade = new Animated.Value(0);
+  const [animatedFinished, setAnimatedFinished] = React.useState(false);
+  let resetValues;
 
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
+
   const formSubmitHandler = e => {
     navigation.navigate('GetOTPCode', {phoneNumber: e.phoneNumber});
   };
 
-  const goToRegister = () => navigation.navigate('Register');
+  const goToRegister = () => navigation.navigate('RegisterScreen');
 
   const startFistViewAnimated = () => {
     Animated.timing(firstAnimatedView, {
@@ -39,11 +43,21 @@ const EnterToApp = () => {
       duration: 750,
       useNativeDriver: true,
     }).start();
+
+    setTimeout(() => {
+      setAnimatedFinished(true);
+    }, 1000);
   };
 
   React.useEffect(() => {
     startFistViewAnimated();
   }, []);
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      resetValues();
+    }, 500);
+  }, [isFocused]);
 
   const registerValidationSchema = yup.object().shape({
     phoneNumber: yup
@@ -53,8 +67,13 @@ const EnterToApp = () => {
   });
 
   return (
-    <SafeAreaView style={{backgroundColor: colors.primary}}>
-      <View style={styles.Container}>
+    <SafeAreaView
+      style={{backgroundColor: animatedFinished ? '#FFF' : colors.primary}}>
+      <View
+        style={[
+          styles.Container,
+          {backgroundColor: animatedFinished ? '#FFF' : colors.primary},
+        ]}>
         <Animated.View
           style={[
             styles.AnimatedView,
@@ -78,11 +97,13 @@ const EnterToApp = () => {
               handleChange,
               handleBlur,
               handleSubmit,
+              resetForm,
               values,
               errors,
               isValid,
               touched,
             }) => {
+              resetValues = resetForm;
               return (
                 <View style={styles.Footers}>
                   <Text style={styles.InputTitle}>شماره موبایل</Text>
@@ -223,7 +244,7 @@ const styles = StyleSheet.create({
     textDecorationStyle: 'solid',
   },
   ErrorText: {
-    color: 'red',
+    color: colors.error1,
     textAlign: 'right',
     fontFamily: 'Vazirmatn-Regular',
     marginTop: moderateScale(5),

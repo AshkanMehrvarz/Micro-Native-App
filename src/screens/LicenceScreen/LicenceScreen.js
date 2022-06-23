@@ -18,7 +18,7 @@ import Toast from 'react-native-toast-message';
 
 export default function LinenceScreen() {
   const navigation = useNavigation();
-  const goHomeHandler = () => navigation.navigate('Home');
+  const goHomeHandler = () => navigation.goBack();
 
   const isFocused = useIsFocused();
 
@@ -59,7 +59,7 @@ export default function LinenceScreen() {
           onPress={goHomeHandler}>
           <BackIcon color={'#333'} />
         </TouchableOpacity>
-        <Text style={styles.Title}>خانه</Text>
+        <Text style={styles.Title}>بازگشت</Text>
       </View>
       <ScrollView style={{height: '100%'}}>
         <View style={styles.Container}>

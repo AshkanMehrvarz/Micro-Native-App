@@ -4,8 +4,8 @@ import Svg, {Path} from 'react-native-svg';
 
 const SvgComponent = props => (
   <Svg
-    width={moderateScale(28)}
-    height={moderateScale(28)}
+    width={1.25 * moderateScale(28)}
+    height={1.25 * moderateScale(28)}
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

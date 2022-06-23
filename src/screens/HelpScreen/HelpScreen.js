@@ -1,7 +1,6 @@
 import {StyleSheet, SafeAreaView} from 'react-native';
 import React from 'react';
 import HelpScreenWebView from './HelpScreenWebView';
-
 import BackHeader from '../../components/BackHeader';
 
 const HelpScreen = () => {
