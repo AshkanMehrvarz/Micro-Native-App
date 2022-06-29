@@ -1,24 +1,29 @@
-import {SafeAreaView, StyleSheet, Animated, View} from 'react-native';
+// Base
+import {SafeAreaView, Animated, View} from 'react-native';
 import React from 'react';
-import LogoInside from '../assets/svg/LogoInside';
-import {colors} from '../assets/theme/Theme';
-import {moderateScale} from 'react-native-size-matters';
+
+// Packages
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+// Ashkan
+import LogoInside from '../../Assets/Svg/LogoInside';
+import {styles} from './Style';
+
 const SplashScreen = () => {
+  // Variables
   const navigation = useNavigation();
   const logoAnimated = new Animated.Value(0);
   const scaleAnimated = new Animated.Value(0);
-
-  // Reset SliderStatus
-  // AsyncStorage.setItem('isSliderFinished', 'false');
-
   const scale = scaleAnimated.interpolate({
     inputRange: [0, 1],
     outputRange: [1, 5000],
   });
 
+  // Reset SliderStatus
+  AsyncStorage.setItem('isSliderFinished', 'false');
+
+  // Functions
   const router = async () => {
     const isSliderFinished = await AsyncStorage.getItem('isSliderFinished');
     const isUserLoggedIn = await AsyncStorage.getItem('isUserLoggedIn');
@@ -26,20 +31,21 @@ const SplashScreen = () => {
     if (isSliderFinished === 'true') {
       if (isUserLoggedIn === 'true') {
         setTimeout(() => {
-          navigation.replace('HomeScreen');
+          navigation.replace('Home');
         }, 2250);
       } else {
         setTimeout(() => {
-          navigation.replace('LoginScreen');
+          navigation.replace('Login');
         }, 2250);
       }
     } else {
       setTimeout(() => {
-        navigation.replace('SlidersScreen');
+        navigation.replace('Intro');
       }, 2250);
     }
   };
 
+  // Timers
   setTimeout(() => {
     Animated.spring(scaleAnimated, {
       toValue: 1,
@@ -47,6 +53,7 @@ const SplashScreen = () => {
     }).start();
   }, 2000);
 
+  // UseEffects
   React.useEffect(() => {
     Animated.spring(logoAnimated, {
       toValue: 1,
@@ -72,27 +79,3 @@ const SplashScreen = () => {
 };
 
 export default SplashScreen;
-
-const styles = StyleSheet.create({
-  Container: {
-    backgroundColor: '#FFF',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  LogoBg: {
-    backgroundColor: colors.primary,
-    width: moderateScale(200),
-    height: moderateScale(200),
-    borderRadius: 9999,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  BgView: {
-    borderRadius: 9999,
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    backgroundColor: colors.primary,
-  },
-});

@@ -1,7 +1,6 @@
-import {StyleSheet, SafeAreaView} from 'react-native';
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import ScreenManager from './src/screens/ScreenManager';
+import ScreenManager from './Src/Screens/ScreenManager';
 
 const App = () => {
   return (

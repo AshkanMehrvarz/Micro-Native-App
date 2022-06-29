@@ -1,5 +1,5 @@
+// Base
 import {
-  StyleSheet,
   Text,
   View,
   SafeAreaView,
@@ -8,16 +8,22 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import React from 'react';
-import BackIconNew from '../../assets/svg/BackIconNew';
-import {colors} from '../../assets/theme/Theme';
-import {moderateScale} from 'react-native-size-matters';
+
+// Packages
 import {useNavigation} from '@react-navigation/native';
-import ResendIcon from '../../assets/svg/ReendIcon';
 import Toast from 'react-native-toast-message';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {moderateScale} from 'react-native-size-matters';
+
+// Ashkan
+import BackIconNew from '../../../Assets/Svg/BackIconNew';
+import {colors} from '../../../Assets/Theme/Index';
+import {styles} from './Style';
+import ResendIcon from '../../../Assets/Svg/ReendIcon';
 
 const GetOTPCode = props => {
+  // States
   const [timer, setTimer] = React.useState({min: 2, sec: 0});
   const [loadingStatus, setLoadingStatus] = React.useState(false);
   const [inputEditableStatus, setInputEditableStatus] = React.useState(true);
@@ -31,15 +37,21 @@ const GetOTPCode = props => {
   });
   const [isSubmitButtonDisabled, setIsSubmitButtonDisabled] =
     React.useState(false);
-  const navigation = useNavigation();
-  const goBackHandler = () => navigation.goBack();
-  const phoneNumber = props.route.params.phoneNumber;
 
+  // Refs
   const input1 = React.useRef();
   const input2 = React.useRef();
   const input3 = React.useRef();
   const input4 = React.useRef();
 
+  // Variables
+  const navigation = useNavigation();
+  const phoneNumber = props.route.params.phoneNumber;
+
+  // Screen Swapers
+  const goBackHandler = () => navigation.goBack();
+
+  // Functions
   const resendCode = () => {
     setTimer({min: 2, sec: 0});
     setFinished(false);
@@ -52,50 +64,6 @@ const GetOTPCode = props => {
     });
     getData();
   };
-
-  React.useEffect(() => {
-    const timerId = setInterval(() => {
-      if (timer.min === 0 && timer.sec === 0) {
-        setFinished(true);
-        setInputEditableStatus(false);
-        setSelectedInput();
-        setIsSubmitButtonDisabled(false);
-        clearInterval(timerId);
-      } else if (timer.sec > 0) {
-        setTimer({...timer, sec: timer.sec - 1});
-      } else {
-        setTimer({...timer, min: timer.min - 1, sec: 59});
-      }
-    }, 10);
-
-    return () => {
-      clearInterval(timerId);
-    };
-  }, [timer]);
-
-  React.useEffect(() => {
-    if (
-      otpCode[1] !== '' &&
-      otpCode[2] !== '' &&
-      otpCode[3] !== '' &&
-      otpCode[4] !== ''
-    ) {
-      setIsSubmitButtonDisabled(true);
-    } else {
-      setIsSubmitButtonDisabled(false);
-    }
-  }, [otpCode]);
-
-  React.useEffect(() => {
-    getData();
-    input1.current.focus();
-  }, []);
-
-  const baseUrl = 'https://api.sabanovin.com';
-  const version = 'v1';
-  const username = 'sa1737973624';
-  const password = '7rRB7QCvptjuoujro45f4ppZOkLtl4sIEYa3';
-  const sender = 'sms/send.json?gateway=90003002&';
 
   const getData = async () => {
     try {
@@ -110,8 +78,8 @@ const GetOTPCode = props => {
 
       if (res.status === 200) {
         if (res.data.ResultCode === 0) {
-          await axios.get(
-            `${baseUrl}/${version}/${username}:${password}/${sender}to=$${phoneNumber}&text=کد تایید = ${res.data.OtpCodeResult}`,
+          const sms = await axios.get(
+            `https://api.sabanovin.com/v1/sa1737973624:7rRB7QCvptjuoujro45f4ppZOkLtl4sIEYa3/sms/send.json?gateway=90003002&to=$${phoneNumber}&text=کد تایید = ${res.data.OtpCodeResult}`,
           );
         } else {
           console.log(res.data.ResultMessage);
@@ -141,7 +109,7 @@ const GetOTPCode = props => {
       if (res.status === 200) {
         if (res.data.ResultCode === 0) {
           console.log(res.data.ResultMessage);
-          navigation.replace('HomeScreen');
+          navigation.replace('Home');
           AsyncStorage.setItem('isUserLoggedIn', 'true');
           setOTPCode([]);
         } else {
@@ -160,6 +128,45 @@ const GetOTPCode = props => {
       console.log(err);
     }
   };
+
+  // UseEffects
+  React.useEffect(() => {
+    const timerId = setInterval(() => {
+      if (timer.min === 0 && timer.sec === 0) {
+        setFinished(true);
+        setInputEditableStatus(false);
+        setSelectedInput();
+        setIsSubmitButtonDisabled(false);
+        clearInterval(timerId);
+      } else if (timer.sec > 0) {
+        setTimer({...timer, sec: timer.sec - 1});
+      } else {
+        setTimer({...timer, min: timer.min - 1, sec: 59});
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(timerId);
+    };
+  }, [timer]);
+
+  React.useEffect(() => {
+    if (
+      otpCode[1] !== '' &&
+      otpCode[2] !== '' &&
+      otpCode[3] !== '' &&
+      otpCode[4] !== ''
+    ) {
+      setIsSubmitButtonDisabled(true);
+    } else {
+      setIsSubmitButtonDisabled(false);
+    }
+  }, [otpCode]);
+
+  React.useEffect(() => {
+    getData();
+    input1.current.focus();
+  }, []);
 
   return (
     <SafeAreaView style={{backgroundColor: '#FFF'}}>
@@ -328,108 +335,3 @@ const GetOTPCode = props => {
 };
 
 export default GetOTPCode;
-
-const styles = StyleSheet.create({
-  Container: {
-    backgroundColor: '#FFF',
-    height: '100%',
-    padding: moderateScale(25),
-    justifyContent: 'space-between',
-  },
-  BackHeaderButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  BackHeaderButtonText: {
-    fontFamily: 'Vazirmatn-Regular',
-    fontSize: moderateScale(14),
-    color: colors.primary,
-    marginLeft: moderateScale(20),
-  },
-  Contents: {
-    marginVertical: moderateScale(50),
-  },
-  h1: {
-    fontFamily: 'Vazirmatn-Black',
-    fontSize: moderateScale(18),
-    textAlign: 'right',
-    color: colors.grey2,
-  },
-  WarningText: {
-    fontFamily: 'Vazirmatn-Regular',
-    fontSize: moderateScale(14),
-    marginTop: moderateScale(20),
-    textAlign: 'right',
-    paddingLeft: moderateScale(25),
-    color: colors.grey3,
-  },
-  TimeText: {
-    color: colors.error1,
-    fontFamily: 'Vazirmatn-Bold',
-  },
-  CodeContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: moderateScale(50),
-    paddingVertical: moderateScale(10),
-  },
-  CodeInput: {
-    width: moderateScale(50),
-    height: moderateScale(50),
-    marginHorizontal: moderateScale(10),
-    borderRadius: moderateScale(8),
-    backgroundColor: colors.grey5,
-    borderColor: colors.grey4,
-    borderWidth: moderateScale(1),
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
-    fontFamily: 'Vazirmatn-Bold',
-    fontSize: moderateScale(18),
-  },
-  Button: {
-    backgroundColor: '#404CCF',
-    height: moderateScale(50),
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: moderateScale(8),
-  },
-  ButtonText: {
-    fontFamily: 'Vazirmatn-Bold',
-    fontSize: moderateScale(18),
-    color: '#FFF',
-  },
-  DidNotgetCode: {
-    marginHorizontal: moderateScale(25),
-    flexDirection: 'row-reverse',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: moderateScale(10),
-  },
-  TimeEndText: {
-    fontFamily: 'Vazirmatn-Regular',
-    fontSize: moderateScale(14),
-    marginTop: moderateScale(20),
-    textAlign: 'right',
-    paddingLeft: moderateScale(25),
-    color: colors.error1,
-  },
-  Resend: {
-    flexDirection: 'row-reverse',
-    alignItems: 'center',
-  },
-  ResendText: {
-    fontFamily: 'Vazirmatn-Bold',
-    fontSize: moderateScale(14),
-    textAlign: 'right',
-    paddingLeft: moderateScale(10),
-    color: colors.primary,
-  },
-  DidNotgetCodeText: {
-    fontFamily: 'Vazirmatn-Medium',
-    fontSize: moderateScale(14),
-    textAlign: 'right',
-    paddingLeft: moderateScale(10),
-    color: colors.grey2,
-  },
-});

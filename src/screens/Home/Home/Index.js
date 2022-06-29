@@ -1,47 +1,44 @@
+// Base
 import {
-  StyleSheet,
   Text,
   View,
   TouchableOpacity,
   SafeAreaView,
   Animated,
-  Easing,
 } from 'react-native';
 import * as React from 'react';
-import HelpIcon from '../../assets/svg/HelpIcon';
-import Logo from '../../assets/svg/Logo';
-import {moderateScale} from 'react-native-size-matters';
+
+// Packages
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {colors} from '../../assets/theme/Theme';
 import Pulse from 'react-native-pulse';
 
+// Ashkan
+import HelpIcon from '../../../Assets/Svg/HelpIcon';
+import Logo from '../../../Assets/Svg/Logo';
+import {colors} from '../../../Assets/Theme/Index';
+import {styles} from './Style';
+
 const HomepageButtons = () => {
-  const animation = new Animated.Value(0);
-  const inputRange = [0, 1];
-  const outputRange = [1, 0.8];
-  const scale = animation.interpolate({inputRange, outputRange});
-  const navigation = useNavigation();
-  const isFocused = useIsFocused();
-  const RegisterButtonHandler = () =>
-    navigation.navigate('GetLicenceFormScreen');
-  const HelpButtonHandler = () => navigation.navigate('HelpScreen');
-  const WebsiteButtonHandler = () => navigation.navigate('WebsiteScreen');
-  const LicenceScreenHandler = () => navigation.navigate('LinenceScreen');
+  // States
   const [isRegistered, setIsRegistered] = React.useState(false);
 
-  const getData = async () => {
-    try {
-      // AsyncStorage.setItem('isRegistered', 'false');
-      const value = await AsyncStorage.getItem('isRegistered');
-      if (value !== null) {
-        setIsRegistered(value === 'false' ? false : true);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  // Variables
+  const navigation = useNavigation();
+  const isFocused = useIsFocused();
 
+  // Screen Swaper
+  const RegisterButtonHandler = () => navigation.navigate('GetLicence');
+  const HelpButtonHandler = () => navigation.navigate('Help');
+  const WebsiteButtonHandler = () => navigation.navigate('Website');
+  const LicenceScreenHandler = () => navigation.navigate('Licence');
+
+  // Animations
+  const animation = new Animated.Value(0);
+  const scale = animation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 0.8],
+  });
   const onPressIn = () => {
     Animated.spring(animation, {
       toValue: 1,
@@ -55,6 +52,20 @@ const HomepageButtons = () => {
     }).start();
   };
 
+  // Functions
+  const getData = async () => {
+    try {
+      AsyncStorage.setItem('isRegistered', 'false');
+      const value = await AsyncStorage.getItem('isRegistered');
+      if (value !== null) {
+        setIsRegistered(value === 'false' ? false : true);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  // UseEffects
   React.useEffect(() => {
     getData();
   }, [isFocused]);
@@ -120,69 +131,3 @@ const HomepageButtons = () => {
 };
 
 export default HomepageButtons;
-
-const styles = StyleSheet.create({
-  Container: {
-    backgroundColor: colors.primary,
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: moderateScale(25),
-  },
-  Button: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#FFF',
-    width: '100%',
-    height: moderateScale(50),
-    marginVertical: moderateScale(10),
-    borderRadius: moderateScale(10),
-    shadowColor: '#000',
-  },
-  Text: {
-    textAlign: 'center',
-    fontFamily: 'Vazirmatn-Black',
-    color: '#404CCF',
-    fontSize: moderateScale(18),
-    marginRight: moderateScale(10),
-  },
-  SecendryButton: {
-    backgroundColor: 'transparent',
-    borderColor: '#FFF',
-    borderWidth: moderateScale(2),
-  },
-  SecendryText: {
-    color: '#FFFFFF',
-  },
-  FooterButtons: {
-    marginTop: moderateScale(25),
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  Icons: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  },
-  Help: {
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'flex-end',
-  },
-  Logo: {
-    position: 'relative',
-    // backgroundColor: 'red',
-    zIndex: 20,
-  },
-  LogoPulse: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    zIndex: -20,
-  },
-});

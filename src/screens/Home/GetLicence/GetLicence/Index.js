@@ -1,5 +1,5 @@
+// Base
 import {
-  StyleSheet,
   TouchableOpacity,
   View,
   SafeAreaView,
@@ -7,15 +7,15 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Platform,
-  ScrollView,
   ActivityIndicator,
   Image,
 } from 'react-native';
 import React from 'react';
+
+// Packages
 import {moderateScale} from 'react-native-size-matters';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {colors} from '../../assets/theme/Theme';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
 import {Formik} from 'formik';
@@ -23,8 +23,11 @@ import * as yup from 'yup';
 import 'yup-phone';
 import NetInfo from '@react-native-community/netinfo';
 import DropDownPicker from 'react-native-dropdown-picker';
-import QrIcon from '../../assets/svg/QrIcon';
-import BackIconNew from '../../assets/svg/BackIconNew';
+
+// Ashkan
+import QrIcon from '../../../../Assets/Svg/QrIcon';
+import BackIconNew from '../../../../Assets/Svg/BackIconNew';
+import {styles} from './Style';
 
 const RegisterPage = () => {
   // States
@@ -75,9 +78,9 @@ const RegisterPage = () => {
   let setFieldRef = null;
 
   // Screen Swaper Functions
-  const RegisterButtonHandler = () => navigation.navigate('LinenceScreen');
+  const RegisterButtonHandler = () => navigation.navigate('Licence');
   const goHomeButton = () => navigation.navigate('Home');
-  const qrCodeHandler = () => navigation.navigate('QrCodeScreen');
+  const qrCodeHandler = () => navigation.navigate('QrScanner');
   const goBackHandler = () => navigation.goBack();
 
   // Functions
@@ -116,7 +119,7 @@ const RegisterPage = () => {
         const res = await axios.put(
           'http://151.106.35.10:2000/api/getlicence/getlicence',
           {
-            Name: values.fullName,
+            Name: values.customerFullName,
             UserId: id,
             CodeMic: values.code,
             MobileNasab: 0,
@@ -161,9 +164,9 @@ const RegisterPage = () => {
     }
   };
 
-  const onCodeChange = (e, setFieldValue) => {
-    setFieldValue('code', e);
-  };
+  // const onCodeChange = (e, setFieldValue) => {
+  //   setFieldValue('code', e);
+  // };
 
   // UseEffects
   React.useEffect(() => {
@@ -291,7 +294,7 @@ const RegisterPage = () => {
                               style={[styles.Input, styles.QrInput]}
                               placeholder={'کد'}
                               placeholderTextColor="#33333380"
-                              onChangeText={e => onCodeChange(e, setFieldValue)}
+                              onChangeText={handleChange('code')}
                               onBlur={handleBlur('code')}
                               value={values.code}
                               keyboardType="numeric"
@@ -404,7 +407,7 @@ const RegisterPage = () => {
           <View style={styles.ErrorView}>
             <Image
               style={styles.ErrorImage}
-              source={require('../../assets/images/error.jpg')}
+              source={require('../../../../Assets/Images/error.jpg')}
             />
             <Text style={styles.ErrorMessage}>شما قبلا ثبت نام کرده اید</Text>
             <TouchableOpacity
@@ -422,121 +425,3 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
-
-const styles = StyleSheet.create({
-  SafeAreaView: {
-    backgroundColor: '#FFF',
-    flex: 1,
-  },
-  MainContainer: {
-    height: '100%',
-    justifyContent: 'space-between',
-  },
-  Button: {
-    width: '100%',
-    backgroundColor: '#404CCF',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: moderateScale(8),
-    height: moderateScale(50),
-    marginTop: moderateScale(25),
-  },
-  ButtonText: {
-    fontFamily: 'Vazirmatn-Black',
-    fontSize: moderateScale(18),
-    color: '#FFF',
-  },
-  ButtonsDiv: {
-    width: '100%',
-  },
-  ButtonSecendry: {
-    marginTop: moderateScale(15),
-    backgroundColor: '#FFF',
-    borderColor: '#404CCF',
-    borderWidth: moderateScale(2),
-  },
-  ButtonTextSecendry: {
-    color: '#404CCF',
-  },
-  Input: {
-    height: moderateScale(47.5),
-    borderRadius: moderateScale(8),
-    backgroundColor: '#FFF',
-    borderWidth: moderateScale(1),
-    borderColor: colors.grey4,
-    paddingHorizontal: moderateScale(10),
-    textAlign: 'right',
-    fontFamily: 'Vazirmatn-Regular',
-    fontSize: moderateScale(14),
-    color: colors.grey1,
-  },
-  InputsContainer: {
-    marginVertical: moderateScale(10),
-  },
-  ErrorText: {
-    color: colors.error1,
-    textAlign: 'right',
-    fontFamily: 'Vazirmatn-Regular',
-    fontSize: moderateScale(12),
-    marginTop: moderateScale(5),
-    marginRight: moderateScale(5),
-  },
-  ErrorView: {
-    height: '100%',
-    backgroundColor: '#FFF',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: moderateScale(25),
-  },
-  ErrorMessage: {
-    fontFamily: 'Vazirmatn-Bold',
-    color: 'red',
-    fontSize: moderateScale(18),
-    marginBottom: moderateScale(50),
-  },
-  ErrorImage: {
-    height: '37.5%',
-    resizeMode: 'contain',
-  },
-  ErrorButton: {
-    backgroundColor: '#ff4f5a',
-    width: '60%',
-    paddingVertical: moderateScale(10),
-    borderRadius: moderateScale(6),
-  },
-  ErrorButtonText: {
-    fontFamily: 'Vazirmatn-Black',
-    fontSize: moderateScale(16),
-    color: '#FFF',
-    textAlign: 'center',
-  },
-  CodeSection: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderRadius: moderateScale(8),
-    backgroundColor: '#FFF',
-    borderWidth: moderateScale(1),
-    borderColor: colors.grey4,
-    height: moderateScale(47.5),
-    paddingLeft: moderateScale(5),
-  },
-  QrInput: {
-    borderRadius: 0,
-    borderColor: 'transparent',
-    width: '85%',
-    borderRadius: moderateScale(8),
-    height: moderateScale(40),
-  },
-  BackHeaderButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: moderateScale(25),
-  },
-  BackHeaderButtonText: {
-    fontFamily: 'Vazirmatn-Regular',
-    fontSize: moderateScale(14),
-    color: colors.primary,
-    marginLeft: moderateScale(20),
-  },
-});

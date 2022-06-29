@@ -1,28 +1,28 @@
-import {
-  StyleSheet,
-  SafeAreaView,
-  View,
-  Text,
-  TouchableOpacity,
-  Linking,
-} from 'react-native';
+import {SafeAreaView, View, TouchableOpacity} from 'react-native';
 import React from 'react';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import {moderateScale} from 'react-native-size-matters';
-import FlashIcon from '../../assets/svg/FlashIcon';
-import CameraIcon from '../../assets/svg/CameraIcon';
+import FlashIcon from '../../../../Assets/Svg/FlashIcon';
+import CameraIcon from '../../../../Assets/Svg/CameraIcon';
 import {RNCamera} from 'react-native-camera';
 import BarcodeMask from 'react-native-barcode-mask';
-import BackHeader from '../../components/BackHeader';
+import BackHeader from '../../../../Components/BackHeader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
+import {styles} from './Style';
 
 export default function QRScreen() {
+  // States
   const [flashStatus, setFlashStatus] = React.useState(false);
   const [cameraStatus, setCameraStatus] = React.useState(true);
-  const navigation = useNavigation();
-  const goRegisterPage = () => navigation.navigate('RegisterPage');
 
+  // Screen Swaper
+  const goRegisterPage = () => navigation.navigate('Register');
+
+  // Variebles
+  const navigation = useNavigation();
+
+  // Functions
   const flashHandler = () => setFlashStatus(!flashStatus);
   const cameraHandler = () => setCameraStatus(!cameraStatus);
   const link = e => {
@@ -85,44 +85,3 @@ export default function QRScreen() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  Container: {
-    height: '100%',
-    position: 'relative',
-    zIndex: 10,
-    alignItems: 'center',
-  },
-  Bottom: {
-    height: moderateScale(50),
-    backgroundColor: '#FFFFFFCC',
-    width: '80%',
-    position: 'absolute',
-    bottom: moderateScale(100),
-    borderRadius: moderateScale(8),
-    zIndex: 20,
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  Flash: {
-    width: moderateScale(50),
-    height: moderateScale(50),
-    borderRadius: moderateScale(8),
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  Mask: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    zIndex: 10,
-  },
-  BackHeader: {
-    position: 'absolute',
-    width: '100%',
-    zIndex: 20,
-  },
-});

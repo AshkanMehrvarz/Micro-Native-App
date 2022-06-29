@@ -1,5 +1,5 @@
+// Base
 import {
-  StyleSheet,
   Text,
   View,
   SafeAreaView,
@@ -7,18 +7,22 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React, {useState} from 'react';
-import {moderateScale} from 'react-native-size-matters';
-import {colors} from '../../assets/theme/Theme';
-import BackIconNew from '../../assets/svg/BackIconNew';
+
+// Packages
 import DropDownPicker from 'react-native-dropdown-picker';
 import {useNavigation} from '@react-navigation/native';
+import {moderateScale} from 'react-native-size-matters';
 import {Formik} from 'formik';
 import * as yup from 'yup';
 import 'yup-phone';
 
+// Ashkan
+import {colors} from '../../../Assets/Theme/Index';
+import BackIconNew from '../../../Assets/Svg/BackIconNew';
+import {styles} from './Style';
+
 const Register = () => {
-  const navigation = useNavigation();
-  const goBackHandler = () => navigation.goBack();
+  // States
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState([]);
   const [items, setItems] = useState([
@@ -55,6 +59,16 @@ const Register = () => {
     {label: 'البرز', value: 'البرز'},
   ]);
 
+  // Screen Swaper
+  const goBackHandler = () => navigation.goBack();
+  const registerFormSubmitHandler = values => {
+    navigation.navigate('OTP', {phoneNumber: values.phoneNumber});
+  };
+
+  // Variables
+  const navigation = useNavigation();
+
+  // Yup
   const registerValidationSchema = yup.object().shape({
     phoneNumber: yup
       .string()
@@ -74,10 +88,6 @@ const Register = () => {
       .min(1, 'انتخاب حداقل یک استان الزامی میباشد')
       .required('انتخاب حداقل یک استان الزامی میباشد'),
   });
-
-  const registerFormSubmitHandler = values => {
-    navigation.navigate('GetOTPCode', {phoneNumber: values.phoneNumber});
-  };
 
   return (
     <SafeAreaView style={{backgroundColor: '#FFF'}}>
@@ -162,7 +172,7 @@ const Register = () => {
                       borderColor: colors.grey4,
                     }}
                     placeholder="استان های فعالیت خود را انتخاب کنید"
-                    maxHeight={200}
+                    maxHeight={moderateScale(200)}
                     searchTextInputProps={{
                       maxLength: 25,
                       style: {
@@ -226,82 +236,3 @@ const Register = () => {
 };
 
 export default Register;
-
-const styles = StyleSheet.create({
-  Container: {
-    height: '100%',
-    backgroundColor: '#FFF',
-    padding: moderateScale(25),
-    justifyContent: 'space-between',
-  },
-  InputDiv: {
-    marginBottom: moderateScale(25),
-  },
-  Input: {
-    height: moderateScale(47.5),
-    borderRadius: moderateScale(8),
-    backgroundColor: '#FFF',
-    borderWidth: moderateScale(1),
-    borderColor: colors.grey4,
-    paddingHorizontal: moderateScale(10),
-    textAlign: 'right',
-    fontFamily: 'Vazirmatn-Regular',
-    fontSize: moderateScale(14),
-    color: colors.grey1,
-  },
-  InputTitle: {
-    textAlign: 'right',
-    marginBottom: moderateScale(10),
-    fontFamily: 'Vazirmatn-Regular',
-    fontSize: moderateScale(14),
-    color: colors.grey1,
-    marginRight: moderateScale(2.5),
-  },
-  Header: {
-    marginVertical: moderateScale(25),
-  },
-  h1: {
-    textAlign: 'right',
-    fontFamily: 'Vazirmatn-Black',
-    fontSize: moderateScale(20),
-    color: colors.primary,
-    marginVertical: moderateScale(5),
-  },
-  DisText: {
-    textAlign: 'right',
-    fontFamily: 'Vazirmatn-Regular',
-    fontSize: moderateScale(14),
-    color: colors.grey3,
-    marginVertical: moderateScale(5),
-    paddingLeft: moderateScale(75),
-  },
-  BackHeaderButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  BackHeaderButtonText: {
-    fontFamily: 'Vazirmatn-Regular',
-    fontSize: moderateScale(14),
-    color: colors.primary,
-    marginLeft: moderateScale(20),
-  },
-  RegisterButton: {
-    backgroundColor: colors.primary,
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: moderateScale(50),
-    borderRadius: moderateScale(6),
-  },
-  RegisterButtonText: {
-    color: '#FFF',
-    fontFamily: 'Vazirmatn-Bold',
-    fontSize: moderateScale(18),
-  },
-  ErrorText: {
-    color: colors.error1,
-    textAlign: 'left',
-    fontFamily: 'Vazirmatn-Regular',
-    fontSize: moderateScale(12),
-    marginTop: moderateScale(5),
-  },
-});
