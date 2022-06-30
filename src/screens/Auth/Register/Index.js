@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   TextInput,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useState} from 'react';
 
@@ -20,53 +21,85 @@ import 'yup-phone';
 import {colors} from '../../../Assets/Theme/Index';
 import BackIconNew from '../../../Assets/Svg/BackIconNew';
 import {styles} from './Style';
+import axios from 'axios';
 
 const Register = () => {
   // States
+  const [loadingStatus, setLoadingStatus] = React.useState(false);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState([]);
   const [items, setItems] = useState([
-    {label: 'آذربایجان شرقی', value: 'آذربایجان شرقی'},
-    {label: 'آذربایجان غربی', value: 'آذربایجان غربی'},
-    {label: 'اردبیل', value: 'اردبیل'},
-    {label: 'اصفهان', value: 'اصفهان'},
-    {label: 'ایلام', value: 'ایلام'},
-    {label: 'بوشهر', value: 'بوشهر'},
-    {label: 'تهران', value: 'تهران'},
-    {label: 'چهار محال و بختیاری', value: 'چهار محال و بختیاری'},
-    {label: 'خوزستان', value: 'خوزستان'},
-    {label: 'زنجان', value: 'زنجان'},
-    {label: 'سمنان', value: 'سمنان'},
-    {label: 'سیستان و بلوچستان', value: 'سیستان و بلوچستان'},
-    {label: 'فارس', value: 'فارس'},
-    {label: 'کرمان', value: 'کرمان'},
-    {label: 'کردستان', value: 'کردستان'},
-    {label: 'کرمانشاه', value: 'کرمانشاه'},
-    {label: 'کهگیلویه و بویراحمد', value: 'کهگیلویه و بویراحمد'},
-    {label: 'گیلان', value: 'گیلان'},
-    {label: 'لرستان', value: 'لرستان'},
-    {label: 'مازندران', value: 'مازندران'},
-    {label: 'مرکزی', value: 'مرکزی'},
-    {label: 'هرمزگان', value: 'هرمزگان'},
-    {label: 'همدان', value: 'همدان'},
-    {label: 'یزد', value: 'یزد'},
-    {label: 'قم', value: 'قم'},
-    {label: 'گلستان', value: 'گلستان'},
-    {label: 'قزوین', value: 'قزوین'},
-    {label: 'خراسان جنوبی', value: 'خراسان جنوبی'},
-    {label: 'خراسان رضوی', value: 'خراسان رضوی'},
-    {label: 'خراسان شمالی', value: 'خراسان شمالی'},
-    {label: 'البرز', value: 'البرز'},
+    {label: 'آذربایجان شرقی', value: 1},
+    {label: 'آذربایجان غربی', value: 2},
+    {label: 'اصفهان', value: 3},
+    {label: 'البرز', value: 4},
+    {label: 'اردبیل', value: 5},
+    {label: 'ایلام', value: 6},
+    {label: 'بوشهر', value: 7},
+    {label: 'تهران', value: 8},
+    {label: 'چهار محال و بختیاری', value: 9},
+    {label: 'خراسان جنوبی', value: 10},
+    {label: 'خراسان رضوی', value: 11},
+    {label: 'خراسان شمالی', value: 12},
+    {label: 'خوزستان', value: 13},
+    {label: 'زنجان', value: 14},
+    {label: 'سمنان', value: 15},
+    {label: 'سیستان و بلوچستان', value: 16},
+    {label: 'فارس', value: 17},
+    {label: 'قزوین', value: 18},
+    {label: 'قم', value: 19},
+    {label: 'کردستان', value: 20},
+    {label: 'کرمان', value: 21},
+    {label: 'کرمانشاه', value: 22},
+    {label: 'کهگیلویه و بویراحمد', value: 23},
+    {label: 'گلستان', value: 24},
+    {label: 'گیلان', value: 25},
+    {label: 'لرستان', value: 26},
+    {label: 'مازندران', value: 27},
+    {label: 'مرکزی', value: 28},
+    {label: 'هرمزگان', value: 29},
+    {label: 'همدان', value: 30},
+    {label: 'یزد', value: 31},
   ]);
 
   // Screen Swaper
   const goBackHandler = () => navigation.goBack();
-  const registerFormSubmitHandler = values => {
-    navigation.navigate('OTP', {phoneNumber: values.phoneNumber});
-  };
 
   // Variables
   const navigation = useNavigation();
+
+  // Functions
+  const registerFormSubmitHandler = async values => {
+    setLoadingStatus(true);
+    let states = [];
+    values.state.map(e => {
+      states.push({State: e});
+    });
+    try {
+      const res = await axios.put(
+        'http://151.106.35.10:2000/api/Register/Register',
+        {
+          LstRegister: states,
+          FullName: values.fullName,
+          UserName: '',
+          UserPass: '',
+          Mobile: values.phoneNumber,
+        },
+      );
+      setLoadingStatus(false);
+      if (res.status === 200) {
+        if (res.data.ResultCode === 1) {
+          navigation.navigate('OTP', {phoneNumber: values.phoneNumber});
+        } else {
+          console.log('res.data.ResultCode is not 1');
+        }
+      } else {
+        console.log('res.status is not 200');
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   // Yup
   const registerValidationSchema = yup.object().shape({
@@ -78,10 +111,10 @@ const Register = () => {
       .string()
       .max(32, 'تعداد کاراکتر ها بیش از حد مجاز است')
       .min(4, 'تعداد کاراکتر ها کمتر از حد مجاز است')
-      .matches(
-        /[پچجحخهعغفقثصضشسیبلاتنمکگوئدذرزطظژؤإأءًٌٍَُِّ\s]+$/,
-        'فقط الفبای فارسی مجاز است',
-      )
+      // .matches(
+      //   /[پچجحخهعغفقثصضشسیبلاتنمکگوئدذرزطظژؤإأءًٌٍَُِّ\s]+$/,
+      //   'فقط الفبای فارسی مجاز است',
+      // )
       .required('نام و نام خانوادگی الزامی میباشد'),
     state: yup
       .array()
@@ -225,7 +258,11 @@ const Register = () => {
                 style={[styles.RegisterButton, {opacity: !isValid ? 0.25 : 1}]}
                 disabled={!isValid}
                 onPress={handleSubmit}>
-                <Text style={styles.RegisterButtonText}>ثبت نام</Text>
+                {loadingStatus ? (
+                  <ActivityIndicator size="small" color="white" />
+                ) : (
+                  <Text style={styles.RegisterButtonText}>ثبت نام</Text>
+                )}
               </TouchableOpacity>
             </View>
           );

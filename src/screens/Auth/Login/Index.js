@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  ActivityIndicator,
 } from 'react-native';
 import React from 'react';
 
@@ -15,15 +16,19 @@ import {Formik} from 'formik';
 import * as yup from 'yup';
 import 'yup-phone';
 import {useNavigation, useIsFocused} from '@react-navigation/native';
+import axios from 'axios';
+import Toast, {ErrorToast} from 'react-native-toast-message';
 
 // Ashkan
 import {colors} from '../../../Assets/Theme/Index';
 import PhoneIcon from '../../../Assets/Svg/PhoneIcon';
 import {styles} from './Style';
+import {moderateScale} from 'react-native-size-matters';
 
 const EnterToApp = () => {
   // States
   const [animatedFinished, setAnimatedFinished] = React.useState(false);
+  const [loadingStatus, setLoadingStatus] = React.useState(false);
 
   // Variables
   const firstAnimatedView = new Animated.Value(0);
@@ -31,12 +36,52 @@ const EnterToApp = () => {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
   let resetValues;
+  const toastConfig = {
+    error: props => (
+      <ErrorToast
+        {...props}
+        style={styles.ToastDiv}
+        text1Style={styles.ToastText1}
+        text2Style={styles.ToastText2}
+      />
+    ),
+  };
 
   // Screen Swaper
-  const formSubmitHandler = e => {
-    navigation.navigate('OTP', {phoneNumber: e.phoneNumber});
-  };
   const goToRegister = () => navigation.navigate('Register');
+
+  // Functions
+  const formSubmitHandler = async values => {
+    setLoadingStatus(true);
+    try {
+      const res = await axios.put(
+        'http://151.106.35.10:2000/api/userlogin/login',
+        {
+          pMobile: values.phoneNumber,
+          OTPCode: '',
+          ForOTP: true,
+        },
+      );
+      setLoadingStatus(false);
+
+      if (res.status === 200) {
+        if (res.data.ResultCode === 0) {
+          navigation.navigate('OTP', {phoneNumber: values.phoneNumber});
+        } else {
+          console.log('res.data.ResultCode is not 0');
+          Toast.show({
+            type: 'error',
+            text1: 'خطا',
+            text2: 'شماره موبایل ثبت نشده است',
+          });
+        }
+      } else {
+        console.log('res.status is not 200');
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   // Animations
   const startFistViewAnimated = () => {
@@ -137,7 +182,11 @@ const EnterToApp = () => {
                     activeOpacity={0.7}
                     onPress={handleSubmit}
                     disabled={!isValid}>
-                    <Text style={styles.LoginButtonText}>ورود</Text>
+                    {loadingStatus ? (
+                      <ActivityIndicator size="small" color="white" />
+                    ) : (
+                      <Text style={styles.LoginButtonText}>ورود</Text>
+                    )}
                   </TouchableOpacity>
 
                   <View style={styles.RegisterTextsDiv}>
@@ -154,6 +203,7 @@ const EnterToApp = () => {
           </Formik>
         </Animated.View>
       </View>
+      <Toast config={toastConfig} topOffset={moderateScale(50)} />
     </SafeAreaView>
   );
 };

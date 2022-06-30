@@ -11,7 +11,7 @@ import React from 'react';
 
 // Packages
 import {useNavigation} from '@react-navigation/native';
-import Toast from 'react-native-toast-message';
+import Toast, {ErrorToast} from 'react-native-toast-message';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {moderateScale} from 'react-native-size-matters';
@@ -47,6 +47,16 @@ const GetOTPCode = props => {
   // Variables
   const navigation = useNavigation();
   const phoneNumber = props.route.params.phoneNumber;
+  const toastConfig = {
+    error: props => (
+      <ErrorToast
+        {...props}
+        style={styles.ToastDiv}
+        text1Style={styles.ToastText1}
+        text2Style={styles.ToastText2}
+      />
+    ),
+  };
 
   // Screen Swapers
   const goBackHandler = () => navigation.goBack();
@@ -70,7 +80,7 @@ const GetOTPCode = props => {
       const res = await axios.put(
         'http://151.106.35.10:2000/api/userlogin/login',
         {
-          pMobile: '09140000000',
+          pMobile: phoneNumber,
           OTPCode: '',
           ForOTP: true,
         },
@@ -100,7 +110,7 @@ const GetOTPCode = props => {
       const res = await axios.put(
         'http://151.106.35.10:2000/api/userlogin/login',
         {
-          pMobile: '09140000000',
+          pMobile: phoneNumber,
           OTPCode: finalOTPCode,
           ForOTP: false,
         },
@@ -116,9 +126,8 @@ const GetOTPCode = props => {
           console.log(res.data.ResultMessage);
           Toast.show({
             type: 'error',
-            text1: 'کد وارد شده صحیح نمیباشد',
-            visibilityTime: 5000,
-            topOffset: moderateScale(50),
+            text1: 'خطا',
+            text2: 'کد وارد شده صحیح نمیباشد',
           });
         }
       } else {
@@ -329,7 +338,7 @@ const GetOTPCode = props => {
           </TouchableOpacity>
         )}
       </View>
-      <Toast />
+      <Toast config={toastConfig} topOffset={moderateScale(50)} />
     </SafeAreaView>
   );
 };
