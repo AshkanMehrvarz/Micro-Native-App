@@ -15,7 +15,7 @@ import {moderateScale} from 'react-native-size-matters';
 import Clipboard from '@react-native-clipboard/clipboard';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Toast from 'react-native-toast-message';
+import Toast, {SuccessToast} from 'react-native-toast-message';
 
 // Ashkan
 import BackIcon from '../../../Assets/Svg/BackIcon';
@@ -28,6 +28,16 @@ export default function LinenceScreen() {
   // Varibles
   const isFocused = useIsFocused();
   const navigation = useNavigation();
+  const toastConfig = {
+    success: props => (
+      <SuccessToast
+        {...props}
+        style={styles.ToastDiv}
+        text1Style={styles.ToastText1}
+        text2Style={styles.ToastText2}
+      />
+    ),
+  };
 
   // Screen Swaper
   const goHomeHandler = () => navigation.navigate('Home');
@@ -38,8 +48,6 @@ export default function LinenceScreen() {
     Toast.show({
       type: 'success',
       text1: 'لایسنس با موفقیت کپی شد',
-      visibilityTime: 5000,
-      topOffset: moderateScale(50),
     });
   };
 
@@ -94,7 +102,7 @@ export default function LinenceScreen() {
           </View>
         </View>
       </ScrollView>
-      <Toast />
+      <Toast config={toastConfig} topOffset={moderateScale(50)} />
     </SafeAreaView>
   );
 }

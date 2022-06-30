@@ -17,7 +17,7 @@ import {moderateScale} from 'react-native-size-matters';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import Toast from 'react-native-toast-message';
+import Toast, {ErrorToast} from 'react-native-toast-message';
 import {Formik} from 'formik';
 import * as yup from 'yup';
 import 'yup-phone';
@@ -76,17 +76,24 @@ const RegisterPage = () => {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
   let setFieldRef = null;
+  const toastConfig = {
+    error: props => (
+      <ErrorToast
+        {...props}
+        style={styles.ToastDiv}
+        text1Style={styles.ToastText1}
+        text2Style={styles.ToastText2}
+      />
+    ),
+  };
 
   // Screen Swaper Functions
-  const RegisterButtonHandler = () => navigation.navigate('Licence');
+  const RegisterButtonHandler = () => navigation.replace('Licence');
   const goHomeButton = () => navigation.navigate('Home');
   const qrCodeHandler = () => navigation.navigate('QrScanner');
   const goBackHandler = () => navigation.goBack();
 
   // Functions
-  const registerPagePlaceholderShowTimeout = () => {
-    setTimeout(() => setShowRegister(true), 1000);
-  };
 
   const getData = async () => {
     try {
@@ -132,22 +139,21 @@ const RegisterPage = () => {
           if (res.data.ResultCode === 1) {
             Toast.show({
               type: 'error',
-              text1: 'کد وارد شده اشتباه است',
-              visibilityTime: 5000,
-              topOffset: moderateScale(50),
+              text1: 'خطا',
+              text2: 'کد وارد شده اشتباه است',
             });
           } else {
             AsyncStorage.setItem('isRegistered', 'true');
             AsyncStorage.setItem('licence', res.data.ResultMessage);
             RegisterButtonHandler();
+            setTimeout(() => setShowRegister(true), 1000);
           }
         } else {
           console.log('errrrorrrr');
           Toast.show({
             type: 'error',
-            text1: 'خطایی از طرف سرور رخ داده است',
-            visibilityTime: 5000,
-            topOffset: moderateScale(50),
+            text1: 'خطا',
+            text2: 'خطایی از طرف سرور رخ داده است',
           });
         }
       } catch (err) {
@@ -171,7 +177,6 @@ const RegisterPage = () => {
   // UseEffects
   React.useEffect(() => {
     getData();
-    registerPagePlaceholderShowTimeout();
     getNetInfo();
     // AsyncStorage.removeItem('code');
   }, [isFocused]);
@@ -418,8 +423,8 @@ const RegisterPage = () => {
             </TouchableOpacity>
           </View>
         ) : null}
-        <Toast />
       </View>
+      <Toast topOffset={moderateScale(50)} config={toastConfig} />
     </SafeAreaView>
   );
 };

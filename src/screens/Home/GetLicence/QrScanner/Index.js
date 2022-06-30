@@ -17,7 +17,7 @@ export default function QRScreen() {
   const [cameraStatus, setCameraStatus] = React.useState(true);
 
   // Screen Swaper
-  const goRegisterPage = () => navigation.navigate('Register');
+  const goRegisterPage = () => navigation.navigate('GetLicence');
 
   // Variebles
   const navigation = useNavigation();

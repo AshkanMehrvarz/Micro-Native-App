@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
+import {colors} from '../../../Assets/Theme/Index';
 
 export const styles = StyleSheet.create({
   Container: {
@@ -81,5 +82,28 @@ export const styles = StyleSheet.create({
     elevation: moderateScale(10),
     shadowOpacity: 0.15,
     shadowRadius: moderateScale(5),
+  },
+  ToastDiv: {
+    borderRightColor: colors.done1,
+    borderWidth: moderateScale(4),
+    borderLeftWidth: 0,
+    borderLeftColor: 'transparent',
+    borderTopWidth: 0,
+    borderTopColor: 'transparent',
+    borderBottomWidth: 0,
+    borderBottomColor: 'transparent',
+    height: moderateScale(60),
+  },
+  ToastText1: {
+    fontFamily: 'Vazirmatn-Bold',
+    fontSize: moderateScale(16),
+    color: colors.done1,
+    textAlign: 'right',
+  },
+  ToastText2: {
+    fontFamily: 'Vazirmatn-Regular',
+    fontSize: moderateScale(14),
+    color: colors.grey2,
+    textAlign: 'right',
   },
 });

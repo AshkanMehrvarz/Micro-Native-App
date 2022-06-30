@@ -16,6 +16,7 @@ import {moderateScale} from 'react-native-size-matters';
 import {Formik} from 'formik';
 import * as yup from 'yup';
 import 'yup-phone';
+import Toast, {ErrorToast} from 'react-native-toast-message';
 
 // Ashkan
 import {colors} from '../../../Assets/Theme/Index';
@@ -67,6 +68,16 @@ const Register = () => {
 
   // Variables
   const navigation = useNavigation();
+  const toastConfig = {
+    error: props => (
+      <ErrorToast
+        {...props}
+        style={styles.ToastDiv}
+        text1Style={styles.ToastText1}
+        text2Style={styles.ToastText2}
+      />
+    ),
+  };
 
   // Functions
   const registerFormSubmitHandler = async values => {
@@ -81,8 +92,8 @@ const Register = () => {
         {
           LstRegister: states,
           FullName: values.fullName,
-          UserName: '',
-          UserPass: '',
+          UserName: values.fullName,
+          UserPass: values.phoneNumber,
           Mobile: values.phoneNumber,
         },
       );
@@ -92,6 +103,12 @@ const Register = () => {
           navigation.navigate('OTP', {phoneNumber: values.phoneNumber});
         } else {
           console.log('res.data.ResultCode is not 1');
+          Toast.show({
+            type: 'error',
+            text1: 'خطا',
+            text2: 'کاربر قبلا ثبت نام کرده است',
+          });
+          console.log(res);
         }
       } else {
         console.log('res.status is not 200');
@@ -268,6 +285,7 @@ const Register = () => {
           );
         }}
       </Formik>
+      <Toast topOffset={moderateScale(50)} config={toastConfig} />
     </SafeAreaView>
   );
 };

@@ -79,4 +79,27 @@ export const styles = StyleSheet.create({
     fontSize: moderateScale(12),
     marginTop: moderateScale(5),
   },
+  ToastDiv: {
+    borderRightColor: colors.error1,
+    borderWidth: moderateScale(4),
+    borderLeftWidth: 0,
+    borderLeftColor: 'transparent',
+    borderTopWidth: 0,
+    borderTopColor: 'transparent',
+    borderBottomWidth: 0,
+    borderBottomColor: 'transparent',
+    height: moderateScale(60),
+  },
+  ToastText1: {
+    fontFamily: 'Vazirmatn-Bold',
+    fontSize: moderateScale(16),
+    color: colors.error1,
+    textAlign: 'right',
+  },
+  ToastText2: {
+    fontFamily: 'Vazirmatn-Regular',
+    fontSize: moderateScale(14),
+    color: colors.grey2,
+    textAlign: 'right',
+  },
 });

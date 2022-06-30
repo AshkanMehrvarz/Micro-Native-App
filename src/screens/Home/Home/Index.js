@@ -55,7 +55,7 @@ const HomepageButtons = () => {
   // Functions
   const getData = async () => {
     try {
-      AsyncStorage.setItem('isRegistered', 'false');
+      // AsyncStorage.setItem('isRegistered', 'false');
       const value = await AsyncStorage.getItem('isRegistered');
       if (value !== null) {
         setIsRegistered(value === 'false' ? false : true);
