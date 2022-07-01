@@ -21,8 +21,8 @@ const SplashScreen = () => {
   });
 
   // Reset SliderStatus
-  // AsyncStorage.setItem('isSliderFinished', 'false');
-  // AsyncStorage.setItem('isUserLoggedIn', 'false');
+  AsyncStorage.setItem('isSliderFinished', 'false');
+  AsyncStorage.setItem('isUserLoggedIn', 'false');
 
   // Functions
   const router = async () => {

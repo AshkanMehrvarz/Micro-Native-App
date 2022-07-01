@@ -14,12 +14,13 @@ import AppIntroSlider from 'react-native-app-intro-slider';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Progress from 'react-native-progress';
+import Lottie from 'lottie-react-native';
 
 // Ashkan
 import {colors} from '../../Assets/Theme/Index';
 import ArrowIcon from '../../Assets/Svg/ArrowIcon';
-import DoneIcon from '../../Assets/Svg/DoneIcon';
 import {styles} from './Style';
+import {moderateScale} from 'react-native-size-matters';
 
 const NewSliders = () => {
   // States
@@ -124,7 +125,17 @@ const NewSliders = () => {
               ]}
               activeOpacity={0.75}
               onPress={goEnterToApp}>
-              <DoneIcon />
+              <Lottie
+                style={{
+                  height: moderateScale(429),
+                  width: moderateScale(420),
+                  position: 'absolute',
+                  top: moderateScale(-43.1),
+                }}
+                source={require('../../Assets/Animation/Done.json')}
+                loop={false}
+                autoPlay={true}
+              />
             </TouchableOpacity>
           )}
 
